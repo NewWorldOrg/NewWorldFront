@@ -10,8 +10,7 @@ module.exports = merge(baseConfig, {
   mode: 'development',
   devtool: 'eval-source-map',
 
-  serve: {
-    LogLevel: 'warn',
+  devServer: {
     hot: true,
     contentBase: 'dist',
     host: HOST,
@@ -52,9 +51,4 @@ module.exports = merge(baseConfig, {
       }
     ]
   },
-
-  optimization: {
-    namedModules: true,
-    noEmitOnErrors: true,
-  }
 })
