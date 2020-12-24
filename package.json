@@ -7,7 +7,9 @@
     "builddev": "webpack --progress --config build/webpack.dev.config.js",
     "prod": "webpack --progress --config build/webpack.prod.config.js",
     "lint": "eslint --ext .ts,.js,.tsx,.jsx src",
-    "lint:fix": "eslint --ext .ts,.js,.tsx,.jsx src --fix"
+    "lint:fix": "eslint --ext .ts,.js,.tsx,.jsx src --fix",
+    "storybook": "start-storybook -p 6006",
+    "build-storybook": "build-storybook"
   },
   "dependencies": {
     "@babel/core": "^7.12.10",
@@ -27,6 +29,7 @@
     "@types/styled-components": "^5.1.7",
     "@typescript-eslint/eslint-plugin": "^4.11.0",
     "@typescript-eslint/parser": "^4.11.0",
+    "autoprefixer": "^10.1.0",
     "axios": "^0.21.1",
     "babel-loader": "^8.2.2",
     "babel-plugin-styled-components": "^1.12.0",
@@ -45,7 +48,7 @@
     "eslint-plugin-react": "^7.21.4",
     "eslint-plugin-react-hooks": "^4.1.2",
     "eslint-plugin-standard": "^5.0.0",
-    "html-webpack-plugin": "^4.5.0",
+    "html-webpack-plugin": "^5.0.0-beta.1",
     "jest": "^26.6.3",
     "postcss": "^8.2.1",
     "postcss-import": "^14.0.0",
@@ -80,5 +83,11 @@
     "webpack-html-plugin": "^0.1.1",
     "webpack-merge": "^5.7.3",
     "webpack-serve": "^3.2.0"
+  },
+  "devDependencies": {
+    "@storybook/addon-actions": "^6.1.11",
+    "@storybook/addon-essentials": "^6.1.11",
+    "@storybook/addon-links": "^6.1.11",
+    "@storybook/react": "^6.1.11"
   }
 }
