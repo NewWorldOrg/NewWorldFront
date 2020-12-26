@@ -18,6 +18,7 @@
     "@babel/preset-react": "^7.12.10",
     "@babel/preset-typescript": "^7.12.7",
     "@material-ui/core": "^4.11.2",
+    "@material-ui/icons": "^4.11.2",
     "@types/axios": "^0.14.0",
     "@types/jest": "^26.0.19",
     "@types/jquery": "^3.5.5",
