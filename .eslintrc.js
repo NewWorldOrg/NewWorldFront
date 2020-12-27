@@ -28,6 +28,7 @@ module.exports = {
   ],
   // add your custom rules here
   rules: {
+    'no-use-before-define': 'off',
     '@typescript-eslint/explicit-module-boundary-types': 'off',
     'react-hooks/rules-of-hooks': 'error',
     'react-hooks/exhaustive-deps': 'error',
