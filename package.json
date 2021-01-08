@@ -4,6 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "webpack serve --mode=development --config build/webpack.devserver.config.js",
+    "watch": "webpack serve --mode=production --config build/webpack.devserver.config.js",
     "builddev": "webpack --progress --config build/webpack.dev.config.js",
     "prod": "webpack --progress --config build/webpack.prod.config.js",
     "lint": "eslint --ext .ts,.js,.tsx,.jsx src",
