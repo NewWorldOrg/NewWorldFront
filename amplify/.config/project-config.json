@@ -1,0 +1,17 @@
+{
+  "projectName": "MedicationHistory",
+  "version": "3.0",
+  "frontend": "javascript",
+  "javascript": {
+    "framework": "react",
+    "config": {
+      "SourceDir": "src",
+      "DistributionDir": "prod",
+      "BuildCommand": "yarn prod",
+      "StartCommand": ""
+    }
+  },
+  "providers": [
+    "awscloudformation"
+  ]
+}
