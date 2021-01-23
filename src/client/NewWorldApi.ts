@@ -14,6 +14,8 @@ export interface PostRegisterParameter {
 export interface PostLoginResponse {
   status: boolean
   data: {
+    // eslint-disable-next-line camelcase
+    access_token: string
     user: {
       id: number
       // eslint-disable-next-line camelcase
@@ -38,7 +40,8 @@ export interface PostLoginResponse {
 }
 
 export interface PostLoginParameter {
-  userId: number
+  // eslint-disable-next-line camelcase
+  user_id: number
   password: string
 }
 
@@ -53,13 +56,14 @@ export async function postRegister(param: PostRegisterParameter): Promise<PostRe
   return result.data
 }
 
-export async function postLogin(param: PostLoginParameter): Promise<PostLoginResponse> {
+export async function postLogin(request: PostLoginParameter): Promise<PostLoginResponse> {
   const result = await axios({
     method: 'POST',
-    url: API_BASE_URL + '/api/user/login',
-    params: {
-      param,
+    url: API_BASE_URL + '/api/users/login',
+    headers: {
+      'content-type': 'multipart/form-data',
     },
+    data: request,
   })
   return result.data
 }
