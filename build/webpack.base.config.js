@@ -3,6 +3,7 @@
 const path = require('path')
 const rm = require('rimraf')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
+const Dotenv = require('dotenv-webpack')
 
 /* delete files */
 rm.sync(path.join(__dirname, '..', 'prod'))
@@ -65,5 +66,6 @@ module.exports = {
       template: './public/index.html',
       inject: true
     }),
+    new Dotenv({ systemvars: false }),
   ]
 }
