@@ -123,9 +123,9 @@ export async function postLogin(request: PostLoginParameter): Promise<PostLoginR
 export async function bearerAuthentication(accessToken: string): Promise<BearerAuthenticationResponse> {
   const result = await axios({
     method: 'GET',
-    url: API_BASE_URL + 'api/users/',
+    url: API_BASE_URL + '/api/users/',
     headers: {
-      'Content-Type': 'application/json',
+      // 'content-type': 'application/json',
       Authorization: `Bearer ${accessToken}`,
     },
   })
