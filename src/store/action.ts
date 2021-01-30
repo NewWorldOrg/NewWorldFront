@@ -16,6 +16,7 @@ const postLoginRequest = () => {
     type: ActionTypes.POST_ACTION,
     payload: {
       isPosting: true,
+      status: true,
     },
   }
 }
@@ -104,7 +105,6 @@ export const postLoginRequestAsync = (
     try {
       const result = await postLogin(request)
       if (!result.status) {
-        console.log('false')
         return dispatch(postLoginFailure('ユーザーIDまたはパスワードに誤りがあります'))
       }
       return dispatch(postLoginSuccess(result.data.access_token))
