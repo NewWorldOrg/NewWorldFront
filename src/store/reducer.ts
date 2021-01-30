@@ -13,7 +13,7 @@ export default function reducer(state = { ...State, ...UserState }, action: Acti
         ...state,
         isAuthenticated: true,
         isPosting: false,
-        status: false,
+        status: true,
         message: action.payload.message,
       }
     case 'LOGIN_ACTION_FAILURE':
