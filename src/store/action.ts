@@ -35,7 +35,7 @@ const postLoginFailure = (message: string) => {
   return {
     type: ActionTypes.POST_ACTION_FAILURE,
     payload: {
-      isAuthenticated: true,
+      isAuthenticated: false,
       isPosting: false,
       status: false,
       message,
@@ -86,6 +86,9 @@ export const bearerAuthenticationAsync = (): ThunkAction<void, BearerAuthenticat
         }
       }
       const result = await bearerAuthentication(accessToken)
+      if (!result.status) {
+        return dispatch(bearerAuthActionFailure())
+      }
       return dispatch(bearerAuthAction(result))
     } catch {
       return dispatch(bearerAuthActionFailure())
@@ -100,6 +103,10 @@ export const postLoginRequestAsync = (
     dispatch(postLoginRequest())
     try {
       const result = await postLogin(request)
+      if (!result.status) {
+        console.log('false')
+        return dispatch(postLoginFailure('ユーザーIDまたはパスワードに誤りがあります'))
+      }
       return dispatch(postLoginSuccess(result.data.access_token))
     } catch {
       return dispatch(postLoginFailure('ユーザーIDまたはパスワードに誤りがあります'))

@@ -18,7 +18,7 @@ import { makeStyles, createMuiTheme, ThemeProvider } from '@material-ui/core/sty
 import * as colors from '@material-ui/core/colors'
 import Container from '@material-ui/core/Container'
 import { Link, useHistory } from 'react-router-dom'
-import { RootStateType } from '../store/state'
+import { RootStateType, UserStateType } from '../store/state'
 import { postLoginRequestAsync, postStatusReset } from '../store/action'
 
 const useStyles = makeStyles((theme) => ({
@@ -56,7 +56,7 @@ export default function Login() {
       type: 'dark',
     },
   })
-  const isAuthenticated = useSelector((state: RootStateType) => state.isAuthenticated)
+  const isAuthenticated = useSelector((state: UserStateType) => state.isAuthenticated)
   const isPosting = useSelector((state: RootStateType) => state.isPosting)
   const status = useSelector((state: RootStateType) => state.status)
   const message = useSelector((state: RootStateType) => state.message)
@@ -97,6 +97,7 @@ export default function Login() {
   if (isAuthenticated) {
     history.push('/my-page')
   }
+
   return (
     <ThemeProvider theme={theme}>
       <Dialog

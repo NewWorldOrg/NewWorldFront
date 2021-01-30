@@ -24,12 +24,12 @@ export default function reducer(state = { ...State, ...UserState }, action: Acti
     case 'IS_LOGIN_CHECK_ACTION':
       return {
         ...state,
-        isAuthenticated: action.payload.isAuthenticated,
+        ...action.payload,
       }
     case 'IS_LOGIN_CHECK_ACTION_FAILURE':
       return {
         ...state,
-        isAuthenticated: action.payload.isAuthenticated,
+        ...action.payload,
       }
     default:
       return state
