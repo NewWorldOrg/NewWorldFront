@@ -101,7 +101,7 @@ export default function Login() {
   return (
     <ThemeProvider theme={theme}>
       <Dialog
-        open={!isPosting && !status && !isClose}
+        open={!isPosting && !isClose && !status && message.length !== 0}
         onClose={handleDialogClose}
         disableEscapeKeyDown={true}
         disableBackdropClick={true}

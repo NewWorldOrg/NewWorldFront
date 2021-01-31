@@ -26,8 +26,10 @@ const postLoginSuccess = (accessToken: string) => {
   return {
     type: ActionTypes.POST_ACTION_SUCCESS,
     payload: {
+      isAuthenticated: true,
       isPosting: false,
       status: true,
+      message: '',
     },
   }
 }
@@ -48,6 +50,7 @@ export const postStatusReset = () => {
   return {
     type: ActionTypes.POST_STATUS_RESET,
     payload: {
+      isAuthenticated: false,
       isPosting: false,
       status: true,
       message: '',

@@ -31,6 +31,11 @@ export default function reducer(state = { ...State, ...UserState }, action: Acti
         ...state,
         ...action.payload,
       }
+    case 'POST_STATUS_RESET':
+      return {
+        ...state,
+        ...action.payload,
+      }
     default:
       return state
   }
