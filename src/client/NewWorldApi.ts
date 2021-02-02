@@ -2,13 +2,15 @@ import axios from 'axios'
 import { API_BASE_URL } from '../../config/config'
 
 export interface PostRegisterResponse {
-  status: null
+  status: boolean
   message: string
+  data: null
 }
 export interface PostRegisterParameter {
-  userId: number
+  // eslint-disable-next-line camelcase
+  user_id: number
   password: string
-  passwordConfirm: string
+  password_confirm: string
 }
 
 export interface PostLoginResponse {
@@ -97,16 +99,14 @@ export interface PostLoginParameter {
   password: string
 }
 
-export async function postRegister(param: PostRegisterParameter): Promise<PostRegisterResponse> {
+export async function postRegister(request: PostRegisterParameter): Promise<PostRegisterResponse> {
   const result = await axios({
     method: 'POST',
-    url: API_BASE_URL + '/api/user/register',
+    url: API_BASE_URL + '/api/users/register',
     headers: {
       'content-type': 'multipart/form-data',
     },
-    params: {
-      param,
-    },
+    data: request,
   })
   return result.data
 }

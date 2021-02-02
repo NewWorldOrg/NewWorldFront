@@ -6,6 +6,7 @@ export interface RootStateType {
 
 export interface UserStateType {
   isAuthenticated: boolean
+  isRegisterd: boolean
   user: [
     {
       id: number
@@ -61,6 +62,7 @@ export const State: RootStateType = {
 
 export const UserState: UserStateType = {
   isAuthenticated: false,
+  isRegisterd: false,
   user: [
     {
       id: 0,

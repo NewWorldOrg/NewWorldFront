@@ -1,6 +1,15 @@
 import { Action, Dispatch } from 'redux'
 import { ThunkAction } from 'redux-thunk'
-import { PostLoginParameter, PostLoginResponse, postLogin, bearerAuthentication, BearerAuthenticationResponse } from '../client/NewWorldApi'
+import { 
+  PostLoginParameter,
+  PostLoginResponse, 
+  postLogin, 
+  bearerAuthentication, 
+  BearerAuthenticationResponse, 
+  PostRegisterParameter, 
+  PostRegisterResponse, 
+  postRegister
+ } from '../client/NewWorldApi'
 
 enum ActionTypes {
   POST_ACTION = 'POST_ACTION',
@@ -11,7 +20,7 @@ enum ActionTypes {
   IS_LOGIN_CHECK_ACTION_FAILURE = 'IS_LOGIN_CHECK_ACTION_FAILURE',
 }
 
-const postLoginRequest = () => {
+const postRequest = () => {
   return {
     type: ActionTypes.POST_ACTION,
     payload: {
@@ -39,6 +48,28 @@ const postLoginFailure = (message: string) => {
     type: ActionTypes.POST_ACTION_FAILURE,
     payload: {
       isAuthenticated: false,
+      isPosting: false,
+      status: false,
+      message,
+    },
+  }
+}
+
+const postRegisterSuccess = (message: string) => {
+  return {
+    type: ActionTypes.POST_ACTION_SUCCESS,
+    payload: {
+      isPosting: false,
+      isRegisterd: true,
+      message,
+    },
+  }
+}
+
+const postRegisterFailure = (message: string) => {
+  return {
+    type: ActionTypes.POST_ACTION_FAILURE,
+    payload: {
       isPosting: false,
       status: false,
       message,
@@ -104,7 +135,7 @@ export const postLoginRequestAsync = (
   request: PostLoginParameter
 ): ThunkAction<void, PostLoginResponse, undefined, Actions> => {
   return async (dispatch: Dispatch<Action>) => {
-    dispatch(postLoginRequest())
+    dispatch(postRequest())
     try {
       const result = await postLogin(request)
       if (!result.status) {
@@ -117,4 +148,24 @@ export const postLoginRequestAsync = (
   }
 }
 
-export type Actions = ReturnType<typeof postLoginRequestAsync> | ReturnType<typeof bearerAuthenticationAsync>
+export const postRegisterRequestAsync = (
+  request: PostRegisterParameter
+): ThunkAction<void, PostRegisterResponse, undefined, Actions> => {
+  return async (dispatch: Dispatch<Action>) => {
+      dispatch(postRequest())
+      if (request.password !== request.password_confirm) {
+          return dispatch(postRegisterFailure('パスワードが一致しません'))
+      }
+      try {
+        const result = await postRegister(request)
+        if (!result.status) {
+          return dispatch(postRegisterFailure('パスワードの登録に失敗しました'))
+        }
+        return dispatch(postRegisterSuccess('パスワードの登録に成功しました'))
+      } catch {
+        return dispatch(postRegisterFailure('ユーザーID・パスワードを確認してください'))
+      }
+  }
+}
+
+export type Actions = ReturnType<typeof postLoginRequestAsync> | ReturnType<typeof bearerAuthenticationAsync> | ReturnType<typeof postRegisterRequestAsync>
