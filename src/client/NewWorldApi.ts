@@ -101,6 +101,9 @@ export async function postRegister(param: PostRegisterParameter): Promise<PostRe
   const result = await axios({
     method: 'POST',
     url: API_BASE_URL + '/api/user/register',
+    headers: {
+      'content-type': 'multipart/form-data',
+    },
     params: {
       param,
     },

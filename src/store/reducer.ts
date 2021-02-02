@@ -8,15 +8,12 @@ export default function reducer(state = { ...State, ...UserState }, action: Acti
         ...state,
         isPosting: true,
       }
-    case 'LOGIN_ACTION_SUCCESS':
+    case 'POST_ACTION_SUCCESS':
       return {
         ...state,
-        isAuthenticated: true,
-        isPosting: false,
-        status: true,
-        message: action.payload.message,
+        ...action.payload
       }
-    case 'LOGIN_ACTION_FAILURE':
+    case 'POST_ACTION_FAILURE':
       return {
         ...state,
         ...action.payload,
