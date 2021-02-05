@@ -1,7 +1,6 @@
 import React, { useCallback, useState } from 'react'
 import {
   FormControl,
-  Grid,
   Button,
   TextField,
   CssBaseline,
@@ -11,7 +10,7 @@ import {
   DialogActions,
   DialogTitle,
 } from '@material-ui/core'
-import BuildIcon from '@material-ui/icons/Build';
+import BuildIcon from '@material-ui/icons/Build'
 import Typography from '@material-ui/core/Typography'
 import { makeStyles, createMuiTheme, ThemeProvider } from '@material-ui/core/styles'
 import * as colors from '@material-ui/core/colors'

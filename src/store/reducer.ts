@@ -11,7 +11,7 @@ export default function reducer(state = { ...State, ...UserState }, action: Acti
     case 'POST_ACTION_SUCCESS':
       return {
         ...state,
-        ...action.payload
+        ...action.payload,
       }
     case 'POST_ACTION_FAILURE':
       return {
