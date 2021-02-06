@@ -94,7 +94,7 @@ export const bearerAuthAction = (result: Record<string, number>) => {
     type: ActionTypes.IS_LOGIN_CHECK_ACTION,
     payload: {
       isAuthenticated: true,
-      user: result.data,
+      user: result.data.user,
     },
   }
 }
