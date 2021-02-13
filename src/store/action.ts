@@ -13,6 +13,7 @@ import {
 
 enum ActionTypes {
   POST_ACTION = 'POST_ACTION',
+  LOAD_ACTION = 'LOAD_ACTION',
   POST_ACTION_SUCCESS = 'POST_ACTION_SUCCESS',
   POST_ACTION_FAILURE = 'POST_ACTION_FAILURE',
   POST_STATUS_RESET = 'POST_STATUS_RESET',
@@ -26,6 +27,15 @@ const postRequest = () => {
     payload: {
       isPosting: true,
       status: true,
+    },
+  }
+}
+
+const loadAction = () => {
+  return {
+    type: ActionTypes.LOAD_ACTION,
+    payload: {
+      isLoading: true,
     },
   }
 }
@@ -60,7 +70,7 @@ const postRegisterSuccess = (message: string) => {
     type: ActionTypes.POST_ACTION_SUCCESS,
     payload: {
       isPosting: false,
-      isRegisterd: true,
+      isRegistered: true,
       message,
     },
   }
@@ -94,7 +104,8 @@ export const bearerAuthAction = (result: Record<string, number>) => {
     type: ActionTypes.IS_LOGIN_CHECK_ACTION,
     payload: {
       isAuthenticated: true,
-      user: result.data.user,
+      user: result.user,
+      isLoading: false,
     },
   }
 }
@@ -104,12 +115,14 @@ export const bearerAuthActionFailure = () => {
     type: ActionTypes.IS_LOGIN_CHECK_ACTION_FAILURE,
     payload: {
       isAuthenticated: false,
+      isLoading: false,
     },
   }
 }
 
 export const bearerAuthenticationAsync = (): ThunkAction<void, BearerAuthenticationResponse, undefined, Actions> => {
   return async (dispatch: Dispatch<Action>) => {
+    dispatch(loadAction())
     try {
       let accessToken = ''
       const cookies = document.cookie
@@ -124,7 +137,7 @@ export const bearerAuthenticationAsync = (): ThunkAction<void, BearerAuthenticat
       if (!result.status) {
         return dispatch(bearerAuthActionFailure())
       }
-      return dispatch(bearerAuthAction(result))
+      return dispatch(bearerAuthAction(result.data))
     } catch {
       return dispatch(bearerAuthActionFailure())
     }
