@@ -3,6 +3,8 @@ import { UserStateType } from '../store/state'
 import { useDispatch, useSelector } from 'react-redux'
 import { useHistory } from 'react-router-dom'
 import { bearerAuthenticationAsync } from '../store/action'
+import { Avatar } from '@material-ui/core'
+import '../styles/MyPage.scss'
 
 export default function MyPage() {
   const dispatch = useDispatch()
@@ -31,7 +33,7 @@ export default function MyPage() {
   })
   return (
     <div className="my-page">
-      <h1>My Page</h1>
+      <Avatar className="icon" alt="Icon" src={user.icon_url} sizes="20" />
     </div>
   )
 }
