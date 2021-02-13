@@ -45,7 +45,7 @@ export default function Register() {
   const dispatch = useDispatch()
   const history = useHistory()
   const isPosting = useSelector((state: RootStateType) => state.isPosting)
-  const isRegisterd = useSelector((state: UserStateType) => state.isRegisterd)
+  const isRegistered = useSelector((state: UserStateType) => state.isRegistered)
   const message = useSelector((state: RootStateType) => state.message)
   const theme = createMuiTheme({
     palette: {
@@ -100,7 +100,7 @@ export default function Register() {
     [dispatch, userId, password, passwordConfirm, setIsClose]
   )
 
-  if (isRegisterd) {
+  if (isRegistered) {
     history.push('/login')
   }
 

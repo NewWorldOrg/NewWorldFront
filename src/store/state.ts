@@ -6,7 +6,7 @@ export interface RootStateType {
 
 export interface UserStateType {
   isAuthenticated: boolean
-  isRegisterd: boolean
+  isRegistered: boolean
   user: {
     id: number
     // eslint-disable-next-line camelcase
@@ -60,7 +60,7 @@ export const State: RootStateType = {
 
 export const UserState: UserStateType = {
   isAuthenticated: false,
-  isRegisterd: false,
+  isRegistered: false,
   user: {
     id: 0,
     // eslint-disable-next-line camelcase

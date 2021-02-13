@@ -60,7 +60,7 @@ const postRegisterSuccess = (message: string) => {
     type: ActionTypes.POST_ACTION_SUCCESS,
     payload: {
       isPosting: false,
-      isRegisterd: true,
+      isRegistered: true,
       message,
     },
   }
