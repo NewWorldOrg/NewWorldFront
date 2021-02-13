@@ -3,6 +3,16 @@ import { Actions } from './action'
 
 export default function reducer(state = { ...State, ...UserState }, action: Actions): RootStateType | UserStateType {
   switch ('type' in action && action.type) {
+    case 'POST_ACTION':
+      return {
+        ...state,
+        ...action.payload,
+      }
+    case 'LOAD_ACTION':
+      return {
+        ...state,
+        ...action.payload,
+      }
     case 'POST_REQUEST_ACTION':
       return {
         ...state,
