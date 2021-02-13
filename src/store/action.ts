@@ -1,15 +1,15 @@
 import { Action, Dispatch } from 'redux'
 import { ThunkAction } from 'redux-thunk'
-import { 
+import {
   PostLoginParameter,
-  PostLoginResponse, 
-  postLogin, 
-  bearerAuthentication, 
-  BearerAuthenticationResponse, 
-  PostRegisterParameter, 
-  PostRegisterResponse, 
-  postRegister
- } from '../client/NewWorldApi'
+  PostLoginResponse,
+  postLogin,
+  bearerAuthentication,
+  BearerAuthenticationResponse,
+  PostRegisterParameter,
+  PostRegisterResponse,
+  postRegister,
+} from '../client/NewWorldApi'
 
 enum ActionTypes {
   POST_ACTION = 'POST_ACTION',
@@ -94,7 +94,7 @@ export const bearerAuthAction = (result: Record<string, number>) => {
     type: ActionTypes.IS_LOGIN_CHECK_ACTION,
     payload: {
       isAuthenticated: true,
-      user: result.data,
+      user: result.data.user,
     },
   }
 }
@@ -152,20 +152,23 @@ export const postRegisterRequestAsync = (
   request: PostRegisterParameter
 ): ThunkAction<void, PostRegisterResponse, undefined, Actions> => {
   return async (dispatch: Dispatch<Action>) => {
-      dispatch(postRequest())
-      if (request.password !== request.password_confirm) {
-          return dispatch(postRegisterFailure('パスワードが一致しません'))
+    dispatch(postRequest())
+    if (request.password !== request.password_confirm) {
+      return dispatch(postRegisterFailure('パスワードが一致しません'))
+    }
+    try {
+      const result = await postRegister(request)
+      if (!result.status) {
+        return dispatch(postRegisterFailure('パスワードの登録に失敗しました'))
       }
-      try {
-        const result = await postRegister(request)
-        if (!result.status) {
-          return dispatch(postRegisterFailure('パスワードの登録に失敗しました'))
-        }
-        return dispatch(postRegisterSuccess('パスワードの登録に成功しました'))
-      } catch {
-        return dispatch(postRegisterFailure('ユーザーID・パスワードを確認してください'))
-      }
+      return dispatch(postRegisterSuccess('パスワードの登録に成功しました'))
+    } catch {
+      return dispatch(postRegisterFailure('ユーザーID・パスワードを確認してください'))
+    }
   }
 }
 
-export type Actions = ReturnType<typeof postLoginRequestAsync> | ReturnType<typeof bearerAuthenticationAsync> | ReturnType<typeof postRegisterRequestAsync>
+export type Actions =
+  | ReturnType<typeof postLoginRequestAsync>
+  | ReturnType<typeof bearerAuthenticationAsync>
+  | ReturnType<typeof postRegisterRequestAsync>
