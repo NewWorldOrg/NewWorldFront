@@ -36,7 +36,7 @@ export default function MyPage() {
   })
   const pieOptions = {
     legend: {
-      position: 'right',
+      position: 'top',
     },
   }
   const chartColors = [
