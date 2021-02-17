@@ -41,7 +41,7 @@ const loadAction = () => {
 }
 
 const postLoginSuccess = (accessToken: string) => {
-  document.cookie = 'access_token=' + accessToken + ';'
+  document.cookie = 'access_token=' + accessToken + ';max-age=1800'
   return {
     type: ActionTypes.POST_ACTION_SUCCESS,
     payload: {
