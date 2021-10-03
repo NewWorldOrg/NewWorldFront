@@ -16,7 +16,7 @@ import { makeStyles, createMuiTheme, ThemeProvider } from '@material-ui/core/sty
 import * as colors from '@material-ui/core/colors'
 import Container from '@material-ui/core/Container'
 import { useDispatch, useSelector } from 'react-redux'
-import { RootStateType, UserStateType } from '../store/state'
+import { RootStateType, UserStateType } from '../store/RootState'
 import { postRegisterRequestAsync, postStatusReset } from '../store/action'
 import { useHistory } from 'react-router-dom'
 

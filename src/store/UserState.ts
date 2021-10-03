@@ -1,10 +1,3 @@
-export interface RootStateType {
-  isPosting: boolean
-  isLoading: boolean
-  status: boolean
-  message: string
-}
-
 export interface UserStateType {
   isAuthenticated: boolean
   isRegistered: boolean
@@ -51,13 +44,6 @@ export interface UserStateType {
       }
     ]
   }
-}
-
-export const State: RootStateType = {
-  isPosting: false,
-  isLoading: false,
-  status: true,
-  message: '',
 }
 
 export const UserState: UserStateType = {

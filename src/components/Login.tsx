@@ -18,7 +18,7 @@ import { makeStyles, createMuiTheme, ThemeProvider } from '@material-ui/core/sty
 import * as colors from '@material-ui/core/colors'
 import Container from '@material-ui/core/Container'
 import { Link, useHistory } from 'react-router-dom'
-import { RootStateType, UserStateType } from '../store/state'
+import { RootStateType, UserStateType } from '../store/RootState'
 import { postLoginRequestAsync, postStatusReset } from '../store/action'
 
 const useStyles = makeStyles((theme) => ({

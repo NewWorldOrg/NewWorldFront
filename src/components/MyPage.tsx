@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { UserStateType, RootStateType } from '../store/state'
+import { UserStateType, RootStateType } from '../store/RootState'
 import { useDispatch, useSelector } from 'react-redux'
 import { useHistory } from 'react-router-dom'
 import { bearerAuthenticationAsync } from '../store/action'

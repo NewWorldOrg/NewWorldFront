@@ -11,13 +11,21 @@ import {
   postRegister,
 } from '../client/NewWorldApi'
 
+// eslint-disable-next-line no-unused-vars
 enum ActionTypes {
+  // eslint-disable-next-line no-unused-vars
   POST_ACTION = 'POST_ACTION',
+  // eslint-disable-next-line no-unused-vars
   LOAD_ACTION = 'LOAD_ACTION',
+  // eslint-disable-next-line no-unused-vars
   POST_ACTION_SUCCESS = 'POST_ACTION_SUCCESS',
+  // eslint-disable-next-line no-unused-vars
   POST_ACTION_FAILURE = 'POST_ACTION_FAILURE',
+  // eslint-disable-next-line no-unused-vars
   POST_STATUS_RESET = 'POST_STATUS_RESET',
+  // eslint-disable-next-line no-unused-vars
   IS_LOGIN_CHECK_ACTION = 'IS_LOGIN_CHECK_ACTION',
+  // eslint-disable-next-line no-unused-vars
   IS_LOGIN_CHECK_ACTION_FAILURE = 'IS_LOGIN_CHECK_ACTION_FAILURE',
 }
 
@@ -40,8 +48,8 @@ const loadAction = () => {
   }
 }
 
-const postLoginSuccess = (accessToken: string) => {
-  document.cookie = 'access_token=' + accessToken + ';max-age=1800'
+const postLoginSuccess = (result: PostLoginResponse) => {
+  document.cookie = 'access_token=' + result.data.access_token + ';max-age=1800'
   return {
     type: ActionTypes.POST_ACTION_SUCCESS,
     payload: {
@@ -99,12 +107,12 @@ export const postStatusReset = () => {
   }
 }
 
-export const bearerAuthAction = (result: Record<string, number>) => {
+export const bearerAuthAction = (result: BearerAuthenticationResponse) => {
   return {
     type: ActionTypes.IS_LOGIN_CHECK_ACTION,
     payload: {
       isAuthenticated: true,
-      user: result.user,
+      user: result.data.user,
       isLoading: false,
     },
   }
@@ -137,7 +145,7 @@ export const bearerAuthenticationAsync = (): ThunkAction<void, BearerAuthenticat
       if (!result.status) {
         return dispatch(bearerAuthActionFailure())
       }
-      return dispatch(bearerAuthAction(result.data))
+      return dispatch(bearerAuthAction(result))
     } catch {
       return dispatch(bearerAuthActionFailure())
     }
@@ -154,7 +162,7 @@ export const postLoginRequestAsync = (
       if (!result.status) {
         return dispatch(postLoginFailure('ユーザーIDまたはパスワードに誤りがあります'))
       }
-      return dispatch(postLoginSuccess(result.data.access_token))
+      return dispatch(postLoginSuccess(result))
     } catch {
       return dispatch(postLoginFailure('ユーザーIDまたはパスワードに誤りがあります'))
     }

@@ -1,7 +1,11 @@
-import { RootStateType, UserStateType, State, UserState } from './state'
+import { RootStateType, RootState } from './RootState'
+import { UserStateType, UserState} from './UserState'
 import { Actions } from './action'
 
-export default function reducer(state = { ...State, ...UserState }, action: Actions): RootStateType | UserStateType {
+export default function reducer(
+  state = { ...RootState, ...UserState },
+  action: Actions
+): RootStateType | UserStateType {
   switch ('type' in action && action.type) {
     case 'POST_ACTION':
       return {
