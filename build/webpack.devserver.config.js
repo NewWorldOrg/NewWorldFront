@@ -3,7 +3,7 @@
 const baseConfig = require('./webpack.base.config.js')
 const { merge } = require('webpack-merge')
 
-const HOST = 'localhost'
+const HOST = '0.0.0.0'
 const PORT = 8080
 
 module.exports = merge(baseConfig, {
@@ -19,7 +19,8 @@ module.exports = merge(baseConfig, {
     historyApiFallback: true,
     watchOptions: {
       poll: true
-    }
+    },
+    disableHostCheck: true,
   },
 
   module: {

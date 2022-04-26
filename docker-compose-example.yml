@@ -1,6 +1,7 @@
 version: '3.9'
 services:
   app:
+    container_name: new-world-front
     build:
       context: .
       dockerfile: ./Dockerfile
@@ -17,12 +18,12 @@ services:
       - "traefik.http.routers.new-world-front.rule=HostRegexp(`nw.localhost`) && (
           Path(
             `/`,
+            `/main.js`,
             `/login`,
             `/register`,
             `/my-page`
           )
         )"
-
 networks:
   docker_default:
     name: docker_default
