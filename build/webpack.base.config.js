@@ -22,7 +22,10 @@ module.exports = {
     rules: [
       {
         test: [/\.ts$/, /\.tsx$/],
-        include: path.resolve('src'),
+        include: [
+          path.resolve('src'),
+          path.resolve('config')
+        ],
         use: [
           {
             loader: 'thread-loader',
