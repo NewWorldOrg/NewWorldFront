@@ -1,5 +1,5 @@
 import { RootStateType, RootState } from './RootState'
-import { UserStateType, UserState} from './UserState'
+import { UserStateType, UserState } from './UserState'
 import { Actions } from './action'
 
 export default function reducer(

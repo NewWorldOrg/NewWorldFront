@@ -18,10 +18,18 @@ services:
       - "traefik.http.routers.new-world-front.rule=HostRegexp(`nw.localhost`) && (
           Path(
             `/`,
-            `/main.js`,
+            `/__vite_ping`,
             `/login`,
             `/register`,
-            `/my-page`
+            `/my-page`,
+            `/@vite/client`,
+            `/@fs/code/node_modules/vite/dist/client/`,
+            `/@react-refresh`,
+          ) ||
+          PathPrefix(
+            `/src/`,
+            `/node_modules/`,
+            `/config/`
           )
         )"
 networks:

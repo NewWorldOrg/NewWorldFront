@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react'
-import { UserStateType, RootStateType } from '../store/RootState'
+import { RootStateType } from '../store/RootState'
+import { UserStateType } from '../store/UserState'
 import { useDispatch, useSelector } from 'react-redux'
 import { useHistory } from 'react-router-dom'
 import { bearerAuthenticationAsync } from '../store/action'
@@ -24,7 +25,6 @@ export default function MyPage() {
   const isLoading = useSelector((state: RootStateType) => state.isLoading)
   const user = useSelector((state: UserStateType) => state.user)
   const drug: Record<string, number> = {}
-
   // eslint-disable-next-line array-callback-return
   user.medication_histories.map((key: Record<string, any>) => {
     const amount = Number(key.amount)
