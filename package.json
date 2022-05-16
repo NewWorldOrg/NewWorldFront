@@ -3,16 +3,13 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "webpack serve --mode=development --config build/webpack.devserver.config.js",
+    "dev": "vite --config vite.config.ts",
     "watch": "webpack serve --mode=production --config build/webpack.devserver.config.js",
-    "builddev": "webpack --progress --config build/webpack.dev.config.js",
-    "prod": "webpack --progress --config build/webpack.prod.config.js",
+    "build": "vite build --config vite.config.ts",
     "lint": "eslint --ext .ts,.js,.tsx,.jsx src",
     "lint:fix": "eslint --ext .ts,.js,.tsx,.jsx src --fix",
     "storybook": "start-storybook -p 6006",
-    "build-storybook": "build-storybook",
-    "vite": "vite build --config vite.config.ts",
-    "vite-dev": "vite --config vite.config.ts"
+    "build-storybook": "build-storybook"
   },
   "dependencies": {
     "@babel/core": "^7.12.10",

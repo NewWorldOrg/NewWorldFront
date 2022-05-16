@@ -5,7 +5,6 @@ import reactRefresh from '@vitejs/plugin-react-refresh'
 import reactJsx from 'vite-react-jsx'
 import eslintPlugin from 'vite-plugin-eslint'
 
-
 const HOST = '0.0.0.0'
 const PORT = 8080
 
@@ -15,25 +14,17 @@ export default defineConfig({
     host: HOST,
     port: PORT,
     strictPort: true,
-    /* hmr: {
-      host: HOST,
-      port: PORT,
+    hmr: {
       clientPort: 80,
-      path: 'dist',
-    }, */
+    },
     watch: {
       ignored: ['./dist', './node_modules'],
     },
     force: true,
   },
-  plugins: [
-    react(),
-    reactJsx(),
-    reactRefresh(),
-    eslintPlugin(),
-  ],
+  plugins: [react(), reactJsx(), reactRefresh(), eslintPlugin()],
   build: {
-    outDir: path.resolve(__dirname, '..', 'dist'),
+    outDir: path.resolve(__dirname, 'dist'),
   },
   envDir: './',
   json: {
