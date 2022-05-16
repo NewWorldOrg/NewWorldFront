@@ -10,8 +10,8 @@ yarn:
 	@docker-compose exec app yarn
 dev:
 	@docker-compose exec app yarn dev
-dev-build:
-	@docker-compose exec app yarn builddev
+build:
+	@docker-compose exec app yarn build
 prod:
 	@docker-compose exec app yarn prod
 lint:

@@ -4,7 +4,7 @@ services:
     container_name: new-world-front
     build:
       context: .
-      dockerfile: ./Dockerfile
+      dockerfile: docker/app/Dockerfile
     networks:
       - default
       - docker_default
