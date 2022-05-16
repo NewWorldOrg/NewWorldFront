@@ -1,1 +1,3 @@
-export const API_BASE_URL = process.env.API_BASE_URL
+export default function config(key: string): string {
+  return process.env[key] as string
+}

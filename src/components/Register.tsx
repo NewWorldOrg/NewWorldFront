@@ -16,7 +16,8 @@ import { makeStyles, createMuiTheme, ThemeProvider } from '@material-ui/core/sty
 import * as colors from '@material-ui/core/colors'
 import Container from '@material-ui/core/Container'
 import { useDispatch, useSelector } from 'react-redux'
-import { RootStateType, UserStateType } from '../store/RootState'
+import { RootStateType } from '../store/RootState'
+import { UserStateType } from '../store/UserState'
 import { postRegisterRequestAsync, postStatusReset } from '../store/action'
 import { useHistory } from 'react-router-dom'
 
@@ -84,7 +85,7 @@ export default function Register() {
   const handleDialogClose = useCallback(() => {
     setIsClose(true)
     dispatch(postStatusReset())
-  }, [setIsClose, setUserId, setPasswordConfirm, setPasswordConfirm, dispatch])
+  }, [setIsClose, dispatch])
 
   const handleSubmit = useCallback(
     (event) => {

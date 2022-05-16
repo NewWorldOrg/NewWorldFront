@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { API_BASE_URL } from '../../config/config'
+import config from '../../config/config'
 
 export interface PostRegisterResponse {
   status: boolean
@@ -101,7 +101,7 @@ export interface PostLoginParameter {
 export async function postRegister(request: PostRegisterParameter): Promise<PostRegisterResponse> {
   const result = await axios({
     method: 'POST',
-    url: API_BASE_URL + '/api/users/register',
+    url: config('API_BASE_URL') + '/api/users/register',
     headers: {
       'content-type': 'multipart/form-data',
     },
@@ -113,7 +113,7 @@ export async function postRegister(request: PostRegisterParameter): Promise<Post
 export async function postLogin(request: PostLoginParameter): Promise<PostLoginResponse> {
   const result = await axios({
     method: 'POST',
-    url: API_BASE_URL + '/api/users/login',
+    url: config('API_BASE_URL') + '/api/users/login',
     headers: {
       'content-type': 'multipart/form-data',
     },
@@ -125,7 +125,7 @@ export async function postLogin(request: PostLoginParameter): Promise<PostLoginR
 export async function bearerAuthentication(accessToken: string): Promise<BearerAuthenticationResponse> {
   const result = await axios({
     method: 'GET',
-    url: API_BASE_URL + '/api/users/',
+    url: config('API_BASE_URL') + '/api/users/',
     headers: {
       // 'content-type': 'application/json',
       Authorization: `Bearer ${accessToken}`,
