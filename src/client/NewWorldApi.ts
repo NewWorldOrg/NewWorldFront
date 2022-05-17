@@ -1,102 +1,10 @@
 import axios from 'axios'
 import config from '../../config/config'
-
-export interface PostRegisterResponse {
-  status: boolean
-  message: string
-  data: null
-}
-export interface PostRegisterParameter {
-  // eslint-disable-next-line camelcase
-  user_id: number
-  password: string
-  // eslint-disable-next-line camelcase
-  password_confirm: string
-}
-
-export interface PostLoginResponse {
-  status: boolean
-  data: {
-    // eslint-disable-next-line camelcase
-    access_token: string
-    user: {
-      id: number
-      // eslint-disable-next-line camelcase
-      user_id: number
-      name: string
-      // eslint-disable-next-line camelcase
-      icon_url: string
-      // eslint-disable-next-line camelcase
-      access_token: string
-      // eslint-disable-next-line camelcase
-      is_registered: string
-      // eslint-disable-next-line camelcase
-      del_flg: number
-      // eslint-disable-next-line camelcase
-      created_at: string
-      // eslint-disable-next-line camelcase
-      updated_at: string
-      // eslint-disable-next-line camelcase
-      medication_histories: Record<string, unknown>
-    }
-  }
-}
-
-export interface BearerAuthenticationResponse {
-  status: boolean
-  message: string
-  data: {
-    user: {
-      id: number
-      // eslint-disable-next-line camelcase
-      user_id: number
-      name: string
-      // eslint-disable-next-line camelcase
-      icon_url: string
-      // eslint-disable-next-line camelcase
-      access_token: string
-      // eslint-disable-next-line camelcase
-      is_registered: number
-      // eslint-disable-next-line camelcase
-      def_flg: number
-      // eslint-disable-next-line camelcase
-      created_at: string
-      // eslint-disable-next-line camelcase
-      updated_at: string
-      // eslint-disable-next-line camelcase
-      medication_histories: [
-        {
-          id: number
-          // eslint-disable-next-line camelcase
-          user_id: number
-          // eslint-disable-next-line camelcase
-          drug_id: number
-          amount: number
-          // eslint-disable-next-line camelcase
-          created_at: string
-          // eslint-disable-next-line camelcase
-          updated_at: string
-          drug: {
-            id: number
-            // eslint-disable-next-line camelcase
-            drug_name: string
-            url: string
-            // eslint-disable-next-line camelcase
-            created_at: string
-            // eslint-disable-next-line camelcase
-            updated_at: string
-          }
-        }
-      ]
-    }
-  }
-}
-
-export interface PostLoginParameter {
-  // eslint-disable-next-line camelcase
-  user_id: number
-  password: string
-}
+import PostRegisterResponse from '../types/client/PostRegisterResponse'
+import PostLoginResponse from '../types/client/PostLoginResponse'
+import BearerAuthenticationResponse from '../types/client/BearerAuthenticationResponse'
+import PostLoginParameter from '../types/client/PostLoginParameter'
+import PostRegisterParameter from '../types/client/PostRegisterParameter'
 
 export async function postRegister(request: PostRegisterParameter): Promise<PostRegisterResponse> {
   const result = await axios({
