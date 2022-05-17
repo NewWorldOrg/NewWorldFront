@@ -24,7 +24,8 @@ module.exports = {
   ],
   plugins: [
     '@typescript-eslint',
-    'react-hooks'
+    'react',
+    'react-hooks',
   ],
   // add your custom rules here
   rules: {
