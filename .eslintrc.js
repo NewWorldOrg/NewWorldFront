@@ -2,9 +2,7 @@
 module.exports = {
   root: true,
   parserOptions: {
-    parser: [
-      '@typescript-eslint/parser'
-    ],
+    parser: '@typescript-eslint/parser',
     ecmaFeatures: {
       jsx: true
     }
@@ -12,15 +10,14 @@ module.exports = {
   env: {
     browser: true,
     jest: true,
-    es6: true
+    es6: true,
   },
   extends: [
     'eslint:recommended',
     'plugin:react/recommended',
     'plugin:@typescript-eslint/recommended',
-    'standard',
     'prettier',
-    'plugin:prettier/recommended'
+    'plugin:prettier/recommended',
   ],
   plugins: [
     '@typescript-eslint',
@@ -30,6 +27,7 @@ module.exports = {
   // add your custom rules here
   rules: {
     'no-use-before-define': 'off',
+    'import/no-unresolved': 'off',
     '@typescript-eslint/explicit-module-boundary-types': 'off',
     'react-hooks/rules-of-hooks': 'error',
     'react-hooks/exhaustive-deps': 'error',
