@@ -1,5 +1,4 @@
 export default interface PostLoginParameter {
-  // eslint-disable-next-line camelcase
-  user_id: number
+  userId: number
   password: string
 }

@@ -13,7 +13,7 @@ import {
 import BuildIcon from '@material-ui/icons/Build'
 import Typography from '@material-ui/core/Typography'
 import { makeStyles, createMuiTheme, ThemeProvider } from '@material-ui/core/styles'
-import * as colors from '@material-ui/core/colors'
+import { blue } from '@material-ui/core/colors'
 import Container from '@material-ui/core/Container'
 import { useDispatch, useSelector } from 'react-redux'
 import { RootStateType } from '../store/RootState'
@@ -51,7 +51,7 @@ export default function Register() {
   const theme = createMuiTheme({
     palette: {
       primary: {
-        main: colors.blue[800],
+        main: blue[800],
       },
       type: 'dark',
     },

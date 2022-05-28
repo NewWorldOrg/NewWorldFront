@@ -1,5 +1,5 @@
-import * as React from 'react'
-import * as ReactDOM from 'react-dom'
+import React from 'react'
+import ReactDOM from 'react-dom'
 import App from './App'
 import './App.scss'
 import Login from './pages/Login'
@@ -24,5 +24,5 @@ ReactDOM.render(
       </Switch>
     </BrowserRouter>
   </Provider>,
-  document.getElementById('root') as HTMLElement
+  document.getElementById('root')
 )

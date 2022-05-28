@@ -15,7 +15,7 @@ import {
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined'
 import Typography from '@material-ui/core/Typography'
 import { makeStyles, createMuiTheme, ThemeProvider } from '@material-ui/core/styles'
-import * as colors from '@material-ui/core/colors'
+import { blue } from '@material-ui/core/colors'
 import Container from '@material-ui/core/Container'
 import { Link, useHistory } from 'react-router-dom'
 import { RootStateType } from '../store/RootState'
@@ -52,7 +52,7 @@ export default function Login() {
   const theme = createMuiTheme({
     palette: {
       primary: {
-        main: colors.blue[800],
+        main: blue[800],
       },
       type: 'dark',
     },

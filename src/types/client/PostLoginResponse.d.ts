@@ -4,7 +4,7 @@ export default interface PostLoginResponse {
     types: string
   }
   message: string
-  data: {
+  data: null | {
     // eslint-disable-next-line camelcase
     access_token: string
     user: {

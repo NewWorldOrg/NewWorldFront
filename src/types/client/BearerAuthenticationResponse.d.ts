@@ -1,49 +1,25 @@
 export default interface BearerAuthenticationResponse {
   status: boolean
+  errors: null | string
   message: string
   data: {
     user: {
       id: number
-      // eslint-disable-next-line camelcase
-      user_id: number
+      userId: number
       name: string
-      // eslint-disable-next-line camelcase
-      icon_url: string
-      // eslint-disable-next-line camelcase
-      access_token: string
-      // eslint-disable-next-line camelcase
-      is_registered: number
-      // eslint-disable-next-line camelcase
-      def_flg: number
-      // eslint-disable-next-line camelcase
-      created_at: string
-      // eslint-disable-next-line camelcase
-      updated_at: string
-      // eslint-disable-next-line camelcase
-      medication_histories: [
-        {
+      iconUrl: string
+      status: string
+      medicationHistories: {
+        medicationHistory: {
           id: number
-          // eslint-disable-next-line camelcase
-          user_id: number
-          // eslint-disable-next-line camelcase
-          drug_id: number
           amount: number
-          // eslint-disable-next-line camelcase
-          created_at: string
-          // eslint-disable-next-line camelcase
-          updated_at: string
           drug: {
             id: number
-            // eslint-disable-next-line camelcase
-            drug_name: string
+            drugName: string
             url: string
-            // eslint-disable-next-line camelcase
-            created_at: string
-            // eslint-disable-next-line camelcase
-            updated_at: string
           }
         }
-      ]
+      }
     }
   }
 }
