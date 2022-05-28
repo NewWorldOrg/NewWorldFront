@@ -1,4 +1,4 @@
-CONTAINER_ID := `docker-compose ps -q app`
+CONTAINER_ID := `docker-compose ps -q new-world-front-app`
 
 docker-build:
 	@docker-compose build
