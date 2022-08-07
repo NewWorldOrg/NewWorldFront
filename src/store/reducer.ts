@@ -1,9 +1,9 @@
-import { RootStateType, RootState } from './RootState'
-import { UserStateType, UserState } from './UserState'
+import { CommonStateType, RootState } from './CommonState'
+import { UserStateType, userState } from './UserState'
 import { Actions } from './action'
 
 export default function reducer(
-  state = { ...RootState, ...UserState },
+  state = { ...RootState, ...userState },
   action: Actions
 ): RootStateType | UserStateType {
   switch ('type' in action && action.type) {

@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { RootStateType } from '../store/RootState'
+import { CommonStateType } from '../store/CommonState'
 import { UserStateType } from '../store/UserState'
 import { useDispatch, useSelector } from 'react-redux'
 import { useHistory } from 'react-router-dom'
@@ -11,29 +11,31 @@ import '../styles/MyPage.scss'
 export default function MyPage() {
   const dispatch = useDispatch()
   const history = useHistory()
-  const isAuthenticated = useSelector((state: UserStateType) => state.isAuthenticated)
+  const user = useSelector((state: UserStateType) => state.user)
   useEffect(() => {
     const bearerAction = async () => {
       await dispatch(bearerAuthenticationAsync())
     }
     bearerAction().then(() => {
-      if (!isAuthenticated) {
+      if (user.status !== 'valid') {
         history.push('/login')
       }
     })
-  }, [dispatch, history, isAuthenticated])
+  }, [dispatch, history, user.status])
   const isLoading = useSelector((state: RootStateType) => state.isLoading)
-  const user = useSelector((state: UserStateType) => state.user)
   const drug: Record<string, number> = {}
   // eslint-disable-next-line array-callback-return
-  user.medication_histories.map((key: Record<string, any>) => {
-    const amount = Number(key.amount)
-    if (drug[key.drug.drug_name] !== undefined) {
-      drug[key.drug.drug_name] += amount
-    } else {
-      drug[key.drug.drug_name] = amount
-    }
-  })
+  console.log(user)
+  if (user.medicationHistories !== undefined) {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    user.medicationHistories.map((key: Record<string, any>) => {
+      const amount = Number(key.amount)
+      drug[key.medicationHistory.drug.drug_name] =
+        drug[key.medicationHistory.drug.drug_name] !== undefined
+          ? (drug[key.medicationHistory.drug.drug_name] += amount)
+          : (drug[key.medicationHistory.drug.drug_name] = amount)
+    })
+  }
   const pieOptions = {
     legend: {
       position: 'top',
@@ -115,7 +117,7 @@ export default function MyPage() {
   }
   return (
     <div className="my-page">
-      <Avatar className="icon" alt="Icon" src={user.icon_url} sizes="20" />
+      <Avatar className="icon" alt="Icon" src={user.iconUrl} sizes="20" />
       <div className="drug-pie-chart">
         <Pie data={data} options={pieOptions} />
       </div>

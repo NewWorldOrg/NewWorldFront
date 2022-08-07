@@ -45,10 +45,10 @@ const postLoginSuccess = (result: PostLoginResponse) => {
   return {
     type: ActionTypes.POST_ACTION_SUCCESS,
     payload: {
-      isAuthenticated: true,
       isPosting: false,
       status: true,
       message: '',
+      user: result.data.user,
     },
   }
 }
@@ -67,7 +67,6 @@ const postRegisterSuccess = (message: string) => ({
   type: ActionTypes.POST_ACTION_SUCCESS,
   payload: {
     isPosting: false,
-    isRegistered: true,
     message,
   },
 })
@@ -84,7 +83,6 @@ const postRegisterFailure = (message: string) => ({
 export const postStatusReset = () => ({
   type: ActionTypes.POST_STATUS_RESET,
   payload: {
-    isAuthenticated: false,
     isPosting: false,
     status: true,
     message: '',
@@ -94,8 +92,7 @@ export const postStatusReset = () => ({
 export const bearerAuthAction = (result: BearerAuthenticationResponse) => ({
   type: ActionTypes.IS_LOGIN_CHECK_ACTION,
   payload: {
-    isAuthenticated: true,
-    user: result.data.user,
+    user: result.data,
     isLoading: false,
   },
 })
@@ -103,7 +100,6 @@ export const bearerAuthAction = (result: BearerAuthenticationResponse) => ({
 export const bearerAuthActionFailure = () => ({
   type: ActionTypes.IS_LOGIN_CHECK_ACTION_FAILURE,
   payload: {
-    isAuthenticated: false,
     isLoading: false,
   },
 })
@@ -145,8 +141,7 @@ export const postLoginRequestAsync = (
       return dispatch(postLoginFailure('ユーザーIDまたはパスワードに誤りがあります'))
     }
     return dispatch(postLoginSuccess(result))
-  } catch (e) {
-    console.log(e)
+  } catch {
     return dispatch(postLoginFailure('ユーザーIDまたはパスワードに誤りがあります'))
   }
 }
@@ -160,7 +155,6 @@ export const postRegisterRequestAsync = (
   }
   try {
     const result = await postRegister(request)
-    await console.log(result.status)
     if (!result.status) {
       return dispatch(postRegisterFailure('パスワードの登録に失敗しました'))
     }

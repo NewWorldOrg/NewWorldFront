@@ -2,27 +2,27 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import App from './App'
 import './App.scss'
+import { BrowserRouter, Route, Routes } from 'react-router-dom'
+import {
+  RecoilRoot,
+  // atom,
+  // selector,
+  // useRecoilState,
+  // useRecoilValue,
+} from 'recoil'
+// import MyPage from './pages/MyPage'
 import Login from './pages/Login'
 import Register from './pages/Register'
-import { BrowserRouter, Route, Switch } from 'react-router-dom'
-import MyPage from './pages/MyPage'
-import { Provider } from 'react-redux'
-import { applyMiddleware, createStore } from 'redux'
-import reducer from './store/reducer'
-import thunk from 'redux-thunk'
-
-const store = createStore(reducer, applyMiddleware(thunk))
 
 ReactDOM.render(
-  <Provider store={store}>
+  <RecoilRoot>
     <BrowserRouter>
-      <Switch>
-        <Route path="/" component={App} exact={true} />
-        <Route path="/login" component={Login} exact={true} />
-        <Route path="/register" component={Register} exact={true} />
-        <Route path="/my-page" component={MyPage} exact={true} />
-      </Switch>
+      <Routes>
+        <Route path="/" element={<App />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
+      </Routes>
     </BrowserRouter>
-  </Provider>,
+  </RecoilRoot>,
   document.getElementById('root')
 )

@@ -1,5 +1,5 @@
 import React from 'react'
-import { useHistory } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import Button from '@material-ui/core/Button'
 import { makeStyles } from '@material-ui/core/styles'
 import './App.scss'
@@ -19,10 +19,10 @@ const useStyles = makeStyles({
 })
 
 function LoginButton(props: Record<string, string>) {
-  const history = useHistory()
+  const navigate = useNavigate()
   const other = props
   const classes = useStyles()
-  return <Button className={classes.root} {...other} onClick={() => history.push('/login')} />
+  return <Button className={classes.root} {...other} onClick={() => navigate('/login')} />
 }
 
 export default function App() {

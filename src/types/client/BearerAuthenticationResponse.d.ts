@@ -9,17 +9,19 @@ export default interface BearerAuthenticationResponse {
       name: string
       iconUrl: string
       status: string
-      medicationHistories: {
-        medicationHistory: {
-          id: number
-          amount: number
-          drug: {
+      medicationHistories: [
+        {
+          medicationHistory: {
             id: number
-            drugName: string
-            url: string
+            amount: string
+            drug: {
+              id: number
+              drugName: string
+              url: string
+            }
           }
         }
-      }
+      ]
     }
   }
 }
