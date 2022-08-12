@@ -13,7 +13,7 @@ import {
 } from '@material-ui/core'
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined'
 import Typography from '@material-ui/core/Typography'
-import { makeStyles, createMuiTheme, ThemeProvider } from '@material-ui/core/styles'
+import { makeStyles, createTheme, ThemeProvider } from '@material-ui/core/styles'
 import { blue } from '@material-ui/core/colors'
 import Container from '@material-ui/core/Container'
 import { Link, useNavigate } from 'react-router-dom'
@@ -46,7 +46,7 @@ const useStyles = makeStyles((theme) => ({
 export default function Login() {
   const classes = useStyles()
   const navigate = useNavigate()
-  const theme = createMuiTheme({
+  const theme = createTheme({
     palette: {
       primary: {
         main: blue[800],

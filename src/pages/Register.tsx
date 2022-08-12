@@ -12,7 +12,7 @@ import {
 } from '@material-ui/core'
 import BuildIcon from '@material-ui/icons/Build'
 import Typography from '@material-ui/core/Typography'
-import { makeStyles, createMuiTheme, ThemeProvider } from '@material-ui/core/styles'
+import { makeStyles, createTheme, ThemeProvider } from '@material-ui/core/styles'
 import { blue } from '@material-ui/core/colors'
 import Container from '@material-ui/core/Container'
 import { useNavigate } from 'react-router-dom'
@@ -43,7 +43,7 @@ export default function Register() {
   const classes = useStyles()
   const history = useNavigate()
   const state = useRecoilValue(commonState)
-  const theme = createMuiTheme({
+  const theme = createTheme({
     palette: {
       primary: {
         main: blue[800],
