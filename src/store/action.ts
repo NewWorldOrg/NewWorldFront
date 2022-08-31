@@ -104,12 +104,7 @@ export const bearerAuthActionFailure = () => ({
   },
 })
 
-export const bearerAuthenticationAsync = (): ThunkAction<
-  void,
-  BearerAuthenticationResponse,
-  undefined,
-  Actions
-> => async (dispatch: Dispatch<Action>) => {
+export const bearerAuthenticationAsync = () => async (dispatch: Dispatch<Action>) => {
   dispatch(loadAction())
   try {
     let accessToken = ''
@@ -131,9 +126,7 @@ export const bearerAuthenticationAsync = (): ThunkAction<
   }
 }
 
-export const postLoginRequestAsync = (
-  request: PostLoginParameter
-): ThunkAction<void, PostLoginResponse, undefined, Actions> => async (dispatch: Dispatch<Action>) => {
+export const postLoginRequestAsync = (request: PostLoginParameter) => async (dispatch: Dispatch<Action>) => {
   dispatch(postRequest())
   try {
     const result = await postLogin(request)
@@ -146,9 +139,7 @@ export const postLoginRequestAsync = (
   }
 }
 
-export const postRegisterRequestAsync = (
-  request: PostRegisterParameter
-): ThunkAction<void, PostRegisterResponse, undefined, Actions> => async (dispatch: Dispatch<Action>) => {
+export const postRegisterRequestAsync = (request: PostRegisterParameter) => async (dispatch: Dispatch<Action>) => {
   dispatch(postRequest())
   if (request.password !== request.password_confirm) {
     return dispatch(postRegisterFailure('パスワードが一致しません'))
@@ -163,8 +154,3 @@ export const postRegisterRequestAsync = (
     return dispatch(postRegisterFailure('ユーザーID・パスワードを確認してください'))
   }
 }
-
-export type Actions =
-  | ReturnType<typeof postLoginRequestAsync>
-  | ReturnType<typeof bearerAuthenticationAsync>
-  | ReturnType<typeof postRegisterRequestAsync>

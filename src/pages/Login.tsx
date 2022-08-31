@@ -97,7 +97,6 @@ export default function Login() {
         open={!state.isPosting && !isClose && !state.status && state.message.length !== 0}
         onClose={handleDialogClose}
         disableEscapeKeyDown={true}
-        disableBackdropClick={true}
       >
         <DialogTitle>ログインに失敗しました</DialogTitle>
         <DialogContent>{state.message}</DialogContent>

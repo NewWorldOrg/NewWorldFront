@@ -34,7 +34,6 @@ export async function bearerAuthentication(accessToken: string): Promise<BearerA
     method: 'GET',
     url: import.meta.env.VITE_API_BASE_URL + '/api/users/',
     headers: {
-      // 'content-type': 'application/json',
       Authorization: `Bearer ${accessToken}`,
     },
   })

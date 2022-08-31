@@ -1,5 +1,4 @@
 import React from 'react'
-import ReactDOM from 'react-dom'
 import App from './App'
 import './App.scss'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
@@ -8,13 +7,15 @@ import {
   // atom,
   // selector,
   // useRecoilState,
-  // useRecoilValue,
 } from 'recoil'
 // import MyPage from './pages/MyPage'
 import Login from './pages/Login'
 import Register from './pages/Register'
+import { createRoot } from 'react-dom/client'
 
-ReactDOM.render(
+const container = document.getElementById('root')
+const root = createRoot(container!)
+root.render(
   <RecoilRoot>
     <BrowserRouter>
       <Routes>
@@ -23,6 +24,5 @@ ReactDOM.render(
         <Route path="/register" element={<Register />} />
       </Routes>
     </BrowserRouter>
-  </RecoilRoot>,
-  document.getElementById('root')
+  </RecoilRoot>
 )
