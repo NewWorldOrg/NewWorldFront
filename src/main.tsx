@@ -8,7 +8,7 @@ import {
   // selector,
   // useRecoilState,
 } from 'recoil'
-// import MyPage from './pages/MyPage'
+import MyPage from './pages/MyPage'
 import Login from './pages/Login'
 import Register from './pages/Register'
 import { createRoot } from 'react-dom/client'
@@ -22,6 +22,7 @@ root.render(
         <Route path="/" element={<App />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
+        <Route path="/my-page" element={<MyPage />} />
       </Routes>
     </BrowserRouter>
   </RecoilRoot>

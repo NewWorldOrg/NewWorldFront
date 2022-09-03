@@ -24,7 +24,10 @@ export async function postLogin(request: PostLoginParameter): Promise<PostLoginR
     headers: {
       'content-type': 'multipart/form-data',
     },
-    data: request,
+    data: {
+      user_id: request.userId,
+      password: request.password,
+    },
   })
   return result.data
 }

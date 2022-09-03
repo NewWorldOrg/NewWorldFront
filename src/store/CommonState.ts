@@ -6,7 +6,8 @@ export const commonState = atom<CommonStateType>({
   default: {
     isPosting: false,
     isLoading: false,
-    status: true,
+    status: false,
     message: '',
+    accessToken: '',
   },
 })

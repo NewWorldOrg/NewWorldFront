@@ -1,39 +1,93 @@
-import React, { useEffect } from 'react'
+import React, { useCallback, useEffect } from 'react'
 import { commonState } from '../store/CommonState'
 import { userState } from '../store/UserState'
 import { useNavigate } from 'react-router-dom'
-import { bearerAuthenticationAsync } from '../store/action'
 import { Avatar, CircularProgress } from '@material-ui/core'
 import '../styles/MyPage.scss'
-import { useRecoilValue } from 'recoil'
+import { useRecoilValue, useSetRecoilState } from 'recoil'
+import { bearerAuthentication } from '../client/NewWorldApi'
+import { CommonStateType } from '../types/store/CommonState'
 
 export default function MyPage() {
-  const history = useNavigate()
+  const navigate = useNavigate()
   const user = useRecoilValue(userState)
   const state = useRecoilValue(commonState)
-  useEffect(() => {
-    const bearerAction = async () => {
-      await bearerAuthenticationAsync()
+  const setState = useSetRecoilState(commonState)
+  const isLogin = useCallback(async () => {
+    try {
+      let accessToken = ''
+      const cookies = document.cookie
+      const cookiesList = cookies.split('; ')
+      for (const c of cookiesList) {
+        const keyValue = c.split('=')
+        if (keyValue[0] === 'access_token') {
+          accessToken = keyValue[1]
+        }
+      }
+      if (accessToken.length === 0) {
+        setState((): CommonStateType => {
+          return {
+            isPosting: false,
+            isLoading: false,
+            status: false,
+            message: '',
+            accessToken: '',
+          }
+        })
+      }
+      const result = await bearerAuthentication(accessToken)
+      if (!result.status) {
+        setState((): CommonStateType => {
+          return {
+            isPosting: false,
+            isLoading: false,
+            status: false,
+            message: result.message,
+            accessToken: '',
+          }
+        })
+        setState((): CommonStateType => {
+          return {
+            isPosting: false,
+            isLoading: false,
+            status: true,
+            message: result.message,
+            accessToken,
+          }
+        })
+      }
+    } catch {
+      setState((): CommonStateType => {
+        return {
+          isPosting: false,
+          isLoading: false,
+          status: false,
+          message: '',
+          accessToken: '',
+        }
+      })
     }
-    bearerAction().then(() => {
-      if (!state.status) {
-        history('/login')
+  }, [setState])
+  useEffect(() => {
+    setState((): CommonStateType => {
+      return {
+        isPosting: false,
+        isLoading: true,
+        status: false,
+        message: '',
+        accessToken: '',
       }
     })
-  }, [history, state])
-  const drug: Record<string, number> = {}
-  // eslint-disable-next-line array-callback-return
-  console.log(user)
-  if (user.user.medicationHistories !== undefined) {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    user.user.medicationHistories.map((key: Record<string, any>) => {
-      const amount = Number(key.amount)
-      drug[key.medicationHistory.drug.drug_name] =
-        drug[key.medicationHistory.drug.drug_name] !== undefined
-          ? (drug[key.medicationHistory.drug.drug_name] += amount)
-          : (drug[key.medicationHistory.drug.drug_name] = amount)
+    const bearerAction = async () => {
+      await isLogin()
+    }
+    bearerAction().then(() => {
+      console.log(state)
+      if (!state.status) {
+        // navigate('/login')
+      }
     })
-  }
+  }, [isLogin, navigate, setState, state])
 
   if (state.isLoading) {
     return (
@@ -50,9 +104,7 @@ export default function MyPage() {
   return (
     <div className="my-page">
       <Avatar className="icon" alt="Icon" src={user.user.iconUrl} sizes="20" />
-      <div className="drug-pie-chart">
-        ログインしまています
-      </div>
+      <div className="drug-pie-chart">ログインしまています</div>
     </div>
   )
 }

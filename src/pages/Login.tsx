@@ -17,8 +17,10 @@ import { makeStyles, createTheme, ThemeProvider } from '@material-ui/core/styles
 import { blue } from '@material-ui/core/colors'
 import Container from '@material-ui/core/Container'
 import { Link, useNavigate } from 'react-router-dom'
-import { useRecoilValue } from 'recoil'
+import { useRecoilValue, useSetRecoilState } from 'recoil'
 import { commonState } from '../store/CommonState'
+import { CommonStateType } from '../types/store/CommonState'
+import { postLogin } from '../client/NewWorldApi'
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -55,12 +57,30 @@ export default function Login() {
     },
   })
   const state = useRecoilValue(commonState)
-  const [userId, setUserId] = useState<string>('')
+  const setState = useSetRecoilState(commonState)
+  const [userId, setUserId] = useState<number>(0)
   const [password, setPassword] = useState<string>('')
   const [isClose, setIsClose] = useState<boolean>(false)
+
+  const changeAccessToken = useCallback(
+    (accessToken: string) => {
+      document.cookie = 'access_token=' + accessToken + ';max-age=1800'
+      setState((): CommonStateType => {
+        return {
+          isPosting: false,
+          isLoading: false,
+          status: true,
+          message: '',
+          accessToken,
+        }
+      })
+    },
+    [setState]
+  )
+
   const handleChangeUserId = useCallback(
     (event: React.ChangeEvent<HTMLInputElement>) => {
-      setUserId(event.target.value)
+      setUserId(Number(event.target.value))
     },
     [setUserId]
   )
@@ -76,18 +96,24 @@ export default function Login() {
   }, [setIsClose])
 
   const handleSubmit = useCallback(
-    (event: FormEvent) => {
+    async (event: FormEvent) => {
       event.preventDefault()
       event.persist()
-      const submitData = new FormData()
-      submitData.append('user_id', userId)
-      submitData.append('password', password)
+      const submitData = {
+        userId,
+        password,
+      }
+      const result = await postLogin(submitData)
+      if (!result.status) {
+        setIsClose(true)
+      }
+      changeAccessToken(result.data.access_token)
       setIsClose(false)
     },
-    [userId, password, setIsClose]
+    [userId, password, setIsClose, changeAccessToken]
   )
 
-  if (!state.status) {
+  if (state.status) {
     navigate('/my-page')
   }
 

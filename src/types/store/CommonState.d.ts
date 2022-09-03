@@ -3,4 +3,5 @@ export interface CommonStateType {
   isLoading: boolean
   status: boolean
   message: string
+  accessToken: string
 }
