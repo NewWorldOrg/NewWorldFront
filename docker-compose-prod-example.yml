@@ -8,6 +8,7 @@ services:
       - docker_default
     volumes:
       - ./dist:/code/dist
+      - ./docker/web/conf.d/local.d/default.conf:/etc/nginx/conf.d/default.conf
     labels:
       - "traefik.enable=true"
       - "traefik.http.services.new-world-front.loadbalancer.server.port=80"
