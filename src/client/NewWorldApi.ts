@@ -28,6 +28,8 @@ export async function postLogin(request: PostLoginParameter): Promise<PostLoginR
       user_id: request.userId,
       password: request.password,
     },
+  }).catch((e) => {
+    return e.response
   })
   return result.data
 }
@@ -39,6 +41,8 @@ export async function bearerAuthentication(accessToken: string): Promise<BearerA
     headers: {
       Authorization: `Bearer ${accessToken}`,
     },
+  }).catch((e) => {
+    return e.response
   })
   return result.data
 }

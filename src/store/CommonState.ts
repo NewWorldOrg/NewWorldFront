@@ -8,6 +8,5 @@ export const commonState = atom<CommonStateType>({
     isLoading: false,
     status: false,
     message: '',
-    accessToken: '',
   },
 })

@@ -62,21 +62,9 @@ export default function Login() {
   const [password, setPassword] = useState<string>('')
   const [isClose, setIsClose] = useState<boolean>(false)
 
-  const changeAccessToken = useCallback(
-    (accessToken: string) => {
-      document.cookie = 'access_token=' + accessToken + ';max-age=1800'
-      setState((): CommonStateType => {
-        return {
-          isPosting: false,
-          isLoading: false,
-          status: true,
-          message: '',
-          accessToken,
-        }
-      })
-    },
-    [setState]
-  )
+  const setAccessToken = useCallback((accessToken: string) => {
+    document.cookie = 'access_token=' + accessToken + ';max-age=1800'
+  }, [])
 
   const handleChangeUserId = useCallback(
     (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -103,19 +91,33 @@ export default function Login() {
         userId,
         password,
       }
+      setState((): CommonStateType => {
+        return {
+          isPosting: true,
+          isLoading: false,
+          status: false,
+          message: '',
+        }
+      })
       const result = await postLogin(submitData)
       if (!result.status) {
-        setIsClose(true)
+        setIsClose(false)
+        setState((): CommonStateType => {
+          return {
+            isPosting: false,
+            isLoading: false,
+            status: result.status,
+            message: result.message || 'ログインに失敗しました',
+          }
+        })
+        return
       }
-      changeAccessToken(result.data.access_token)
-      setIsClose(false)
+      setAccessToken(result.data.access_token)
+      setIsClose(true)
+      navigate('/my-page')
     },
-    [userId, password, setIsClose, changeAccessToken]
+    [userId, password, setState, setAccessToken, navigate]
   )
-
-  if (state.status) {
-    navigate('/my-page')
-  }
 
   return (
     <ThemeProvider theme={theme}>

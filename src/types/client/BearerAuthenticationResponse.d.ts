@@ -1,6 +1,6 @@
 export default interface BearerAuthenticationResponse {
   status: boolean
-  errors: null | string
+  errors: null
   message: string
   data: {
     user: {
@@ -11,14 +11,12 @@ export default interface BearerAuthenticationResponse {
       status: string
       medicationHistories: [
         {
-          medicationHistory: {
+          id: number
+          amount: string
+          drug: {
             id: number
-            amount: string
-            drug: {
-              id: number
-              drugName: string
-              url: string
-            }
+            drugName: string
+            url: string
           }
         }
       ]

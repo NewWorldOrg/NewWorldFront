@@ -2,12 +2,7 @@ import React from 'react'
 import App from './App'
 import './App.scss'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
-import {
-  RecoilRoot,
-  // atom,
-  // selector,
-  // useRecoilState,
-} from 'recoil'
+import { RecoilRoot } from 'recoil'
 import MyPage from './pages/MyPage'
 import Login from './pages/Login'
 import Register from './pages/Register'
