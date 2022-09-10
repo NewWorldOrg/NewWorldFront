@@ -1,11 +1,11 @@
-CONTAINER_ID := `docker-compose ps -q app`
+CONTAINER_ID := `docker-compose ps -q new-world-front-app`
 
 docker-build:
 	@docker-compose build
 up:
-	@docker-compose up -d
+	@mutagen-compose up -d
 down:
-	@docker-compose down
+	@mutagen-compose down
 yarn:
 	@docker-compose exec new-world-front-app yarn
 dev:

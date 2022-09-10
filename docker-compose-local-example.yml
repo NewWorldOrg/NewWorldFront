@@ -1,15 +1,24 @@
 version: '3.9'
+
+x-mutagen:
+  sync:
+    code:
+      alpha: "."
+      beta: "volume://code"
+      mode: "two-way-resolved"
+      ignore:
+        vcs: true
+
 services:
-  app:
-    container_name: new-world-front
-    build:
-      context: .
-      dockerfile: docker/app/Dockerfile
+  new-world-front-app:
+    container_name: new-world-front-app
+    image: node:16.13.0
+    working_dir: /code
     networks:
       - default
       - docker_default
     volumes:
-      - .:/code
+      - code:/code
       - node-modules:/code/node_modules
     stdin_open: true
     labels:
@@ -37,4 +46,5 @@ networks:
     name: docker_default
 
 volumes:
+  code:
   node-modules:

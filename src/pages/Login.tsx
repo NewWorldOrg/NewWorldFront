@@ -1,5 +1,4 @@
-import React, { useCallback, useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
+import React, { FormEvent, useCallback, useState } from 'react'
 import {
   FormControl,
   Grid,
@@ -14,13 +13,14 @@ import {
 } from '@material-ui/core'
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined'
 import Typography from '@material-ui/core/Typography'
-import { makeStyles, createMuiTheme, ThemeProvider } from '@material-ui/core/styles'
-import * as colors from '@material-ui/core/colors'
+import { makeStyles, createTheme, ThemeProvider } from '@material-ui/core/styles'
+import { blue } from '@material-ui/core/colors'
 import Container from '@material-ui/core/Container'
-import { Link, useHistory } from 'react-router-dom'
-import { RootStateType } from '../store/RootState'
-import { UserStateType } from '../store/UserState'
-import { postLoginRequestAsync, postStatusReset } from '../store/action'
+import { Link, useNavigate } from 'react-router-dom'
+import { useRecoilValue, useSetRecoilState } from 'recoil'
+import { commonState } from '../store/CommonState'
+import { CommonStateType } from '../types/store/CommonState'
+import { postLogin } from '../client/NewWorldApi'
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -47,26 +47,28 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Login() {
   const classes = useStyles()
-  const history = useHistory()
-  const dispatch = useDispatch()
-  const theme = createMuiTheme({
+  const navigate = useNavigate()
+  const theme = createTheme({
     palette: {
       primary: {
-        main: colors.blue[800],
+        main: blue[800],
       },
       type: 'dark',
     },
   })
-  const isAuthenticated = useSelector((state: UserStateType) => state.isAuthenticated)
-  const isPosting = useSelector((state: RootStateType) => state.isPosting)
-  const status = useSelector((state: RootStateType) => state.status)
-  const message = useSelector((state: RootStateType) => state.message)
-  const [userId, setUserId] = useState<string>('')
+  const state = useRecoilValue(commonState)
+  const setState = useSetRecoilState(commonState)
+  const [userId, setUserId] = useState<number>(0)
   const [password, setPassword] = useState<string>('')
   const [isClose, setIsClose] = useState<boolean>(false)
+
+  const setAccessToken = useCallback((accessToken: string) => {
+    document.cookie = 'access_token=' + accessToken + ';max-age=1800'
+  }, [])
+
   const handleChangeUserId = useCallback(
     (event: React.ChangeEvent<HTMLInputElement>) => {
-      setUserId(event.target.value)
+      setUserId(Number(event.target.value))
     },
     [setUserId]
   )
@@ -79,36 +81,53 @@ export default function Login() {
 
   const handleDialogClose = useCallback(() => {
     setIsClose(true)
-    dispatch(postStatusReset())
-  }, [setIsClose, dispatch])
+  }, [setIsClose])
 
   const handleSubmit = useCallback(
-    (event) => {
+    async (event: FormEvent) => {
       event.preventDefault()
       event.persist()
-      const submitData = new FormData()
-      submitData.append('user_id', userId)
-      submitData.append('password', password)
-      setIsClose(false)
-      dispatch(postLoginRequestAsync(submitData))
+      const submitData = {
+        userId,
+        password,
+      }
+      setState((): CommonStateType => {
+        return {
+          isPosting: true,
+          isLoading: false,
+          status: false,
+          message: '',
+        }
+      })
+      const result = await postLogin(submitData)
+      if (!result.status) {
+        setIsClose(false)
+        setState((): CommonStateType => {
+          return {
+            isPosting: false,
+            isLoading: false,
+            status: result.status,
+            message: result.message || 'ログインに失敗しました',
+          }
+        })
+        return
+      }
+      setAccessToken(result.data.access_token)
+      setIsClose(true)
+      navigate('/my-page')
     },
-    [dispatch, userId, password, setIsClose]
+    [userId, password, setState, setAccessToken, navigate]
   )
-
-  if (isAuthenticated) {
-    history.push('/my-page')
-  }
 
   return (
     <ThemeProvider theme={theme}>
       <Dialog
-        open={!isPosting && !isClose && !status && message.length !== 0}
+        open={!state.isPosting && !isClose && !state.status && state.message.length !== 0}
         onClose={handleDialogClose}
         disableEscapeKeyDown={true}
-        disableBackdropClick={true}
       >
         <DialogTitle>ログインに失敗しました</DialogTitle>
-        <DialogContent>{message}</DialogContent>
+        <DialogContent>{state.message}</DialogContent>
         <DialogActions>
           <Button onClick={() => handleDialogClose()} color="primary">
             OK
@@ -138,7 +157,7 @@ export default function Login() {
                   name="user_id"
                   autoComplete="user_id"
                   onChange={handleChangeUserId}
-                  disabled={isPosting}
+                  disabled={state.isPosting}
                 />
                 <TextField
                   variant="outlined"
