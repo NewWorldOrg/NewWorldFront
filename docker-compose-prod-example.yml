@@ -2,9 +2,7 @@ version: '3.9'
 services:
   web:
     container_name: new-world-front-web
-    build:
-      context: .
-      dockerfile: docker/web/Dockerfile
+    image: nginx:latest
     networks:
       - default
       - docker_default
@@ -33,9 +31,8 @@ services:
         )"
   app:
     container_name: new-world-app
-    build:
-      dockerfile: docker/app/Dockerfile
-      context: .
+    image: node:16.13.0
+    working_dir: /code
     volumes:
       - .:/code
       - node-modules:/code/node_modules
