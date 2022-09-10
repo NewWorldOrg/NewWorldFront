@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react'
+import React, { FormEvent, useCallback, useState } from 'react'
 import {
   FormControl,
   Button,
@@ -12,14 +12,12 @@ import {
 } from '@material-ui/core'
 import BuildIcon from '@material-ui/icons/Build'
 import Typography from '@material-ui/core/Typography'
-import { makeStyles, createMuiTheme, ThemeProvider } from '@material-ui/core/styles'
-import * as colors from '@material-ui/core/colors'
+import { makeStyles, createTheme, ThemeProvider } from '@material-ui/core/styles'
+import { blue } from '@material-ui/core/colors'
 import Container from '@material-ui/core/Container'
-import { useDispatch, useSelector } from 'react-redux'
-import { RootStateType } from '../store/RootState'
-import { UserStateType } from '../store/UserState'
-import { postRegisterRequestAsync, postStatusReset } from '../store/action'
-import { useHistory } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
+import { useRecoilValue } from 'recoil'
+import { commonState } from '../store/CommonState'
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -43,15 +41,12 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Register() {
   const classes = useStyles()
-  const dispatch = useDispatch()
-  const history = useHistory()
-  const isPosting = useSelector((state: RootStateType) => state.isPosting)
-  const isRegistered = useSelector((state: UserStateType) => state.isRegistered)
-  const message = useSelector((state: RootStateType) => state.message)
-  const theme = createMuiTheme({
+  const history = useNavigate()
+  const state = useRecoilValue(commonState)
+  const theme = createTheme({
     palette: {
       primary: {
-        main: colors.blue[800],
+        main: blue[800],
       },
       type: 'dark',
     },
@@ -84,11 +79,10 @@ export default function Register() {
 
   const handleDialogClose = useCallback(() => {
     setIsClose(true)
-    dispatch(postStatusReset())
-  }, [setIsClose, dispatch])
+  }, [setIsClose])
 
   const handleSubmit = useCallback(
-    (event) => {
+    (event: FormEvent) => {
       event.preventDefault()
       event.persist()
       const submitData = new FormData()
@@ -96,25 +90,24 @@ export default function Register() {
       submitData.append('password', password)
       submitData.append('password_confirm', passwordConfirm)
       setIsClose(false)
-      dispatch(postRegisterRequestAsync(submitData))
     },
-    [dispatch, userId, password, passwordConfirm, setIsClose]
+    [userId, password, passwordConfirm, setIsClose]
   )
 
-  if (isRegistered) {
-    history.push('/login')
+  if (!state.status) {
+    history('/login')
   }
 
   return (
     <ThemeProvider theme={theme}>
       <Dialog
-        open={!isPosting && !isClose && message.length !== 0}
+        open={!state.isPosting && !isClose && state.message.length !== 0}
         onClose={handleDialogClose}
         disableEscapeKeyDown={true}
         disableBackdropClick={true}
       >
         <DialogTitle>パスワードの登録に失敗しました</DialogTitle>
-        <DialogContent>{message}</DialogContent>
+        <DialogContent>{state.message}</DialogContent>
         <DialogActions>
           <Button onClick={() => handleDialogClose()} color="primary">
             OK

@@ -1,95 +1,70 @@
-export interface UserStateType {
-  isAuthenticated: boolean
-  isRegistered: boolean
-  user: {
-    id: number
-    // eslint-disable-next-line camelcase
-    user_id: number
-    name: string
-    // eslint-disable-next-line camelcase
-    icon_url: string
-    // eslint-disable-next-line camelcase
-    access_token: string
-    // eslint-disable-next-line camelcase
-    is_registered: number
-    // eslint-disable-next-line camelcase
-    def_flg: number
-    // eslint-disable-next-line camelcase
-    created_at: string
-    // eslint-disable-next-line camelcase
-    updated_at: string
-    // eslint-disable-next-line camelcase
-    medication_histories: [
-      {
-        id: number
-        // eslint-disable-next-line camelcase
-        user_id: number
-        // eslint-disable-next-line camelcase
-        drug_id: number
-        amount: number
-        // eslint-disable-next-line camelcase
-        created_at: string
-        // eslint-disable-next-line camelcase
-        updated_at: string
-        drug: {
-          id: number
-          // eslint-disable-next-line camelcase
-          drug_name: string
-          url: string
-          // eslint-disable-next-line camelcase
-          created_at: string
-          // eslint-disable-next-line camelcase
-          updated_at: string
-        }
-      }
-    ]
-  }
-}
+import { atom, selector } from 'recoil'
+import { UserStateType } from '../types/store/UserState'
+import { bearerAuthentication } from '../client/NewWorldApi'
 
-export const UserState: UserStateType = {
-  isAuthenticated: false,
-  isRegistered: false,
-  user: {
-    id: 0,
-    // eslint-disable-next-line camelcase
-    user_id: 0,
-    name: '',
-    // eslint-disable-next-line camelcase
-    icon_url: '',
-    // eslint-disable-next-line camelcase
-    access_token: '',
-    // eslint-disable-next-line camelcase
-    is_registered: 0,
-    // eslint-disable-next-line camelcase
-    def_flg: 0,
-    // eslint-disable-next-line camelcase
-    created_at: '',
-    // eslint-disable-next-line camelcase
-    updated_at: '',
-    // eslint-disable-next-line camelcase
-    medication_histories: [
-      {
-        id: 0,
-        // eslint-disable-next-line camelcase
-        user_id: 0,
-        // eslint-disable-next-line camelcase
-        drug_id: 0,
-        amount: 0,
-        // eslint-disable-next-line camelcase
-        created_at: '',
-        // eslint-disable-next-line camelcase
-        updated_at: '',
-        drug: {
+export const userState = atom<UserStateType>({
+  key: 'user/userState',
+  default: {
+    user: {
+      id: 0,
+      userId: 0,
+      name: '',
+      iconUrl: '',
+      status: '',
+      medicationHistories: [
+        {
           id: 0,
-          // eslint-disable-next-line camelcase
-          drug_name: '',
-          url: '',
-          // eslint-disable-next-line camelcase
-          created_at: '',
-          // eslint-disable-next-line camelcase
-          updated_at: '',
+          amount: '',
+          drug: {
+            id: 0,
+            drugName: '',
+            url: '',
+          },
         },
-      },
-    ],
+      ],
+    },
   },
-}
+})
+
+export const syncUser = selector({
+  key: 'user/syncUser',
+  get: async ({ get }) => {
+    let accessToken = ''
+    const cookies = document.cookie
+    const cookiesArray = cookies.split('; ')
+    for (const c of cookiesArray) {
+      const keyValue = c.split('=')
+      if (keyValue[0] === 'access_token') {
+        accessToken = keyValue[1]
+      }
+    }
+    const _userState = get(userState).user
+    if (!_userState) {
+      return _userState
+    }
+    const result = await bearerAuthentication(accessToken)
+    if (!result.status) {
+      return {
+        user: {
+          id: 0,
+          userId: 0,
+          name: '',
+          iconUrl: '',
+          status: '',
+          medicationHistories: [
+            {
+              id: 0,
+              amount: '',
+              drug: {
+                id: 0,
+                drugName: '',
+                url: '',
+              },
+            },
+          ],
+        },
+      }
+    }
+    return result.data
+  },
+})
