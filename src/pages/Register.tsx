@@ -15,9 +15,10 @@ import Typography from '@material-ui/core/Typography'
 import { makeStyles, createTheme, ThemeProvider } from '@material-ui/core/styles'
 import { blue } from '@material-ui/core/colors'
 import Container from '@material-ui/core/Container'
-import { useNavigate } from 'react-router-dom'
-import { useRecoilValue } from 'recoil'
+import { useRecoilValue, useSetRecoilState } from 'recoil'
 import { commonState } from '../store/CommonState'
+import { postRegister } from '../client/NewWorldApi'
+import { CommonStateType } from '../types/store/CommonState'
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -41,8 +42,8 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Register() {
   const classes = useStyles()
-  const history = useNavigate()
   const state = useRecoilValue(commonState)
+  const setState = useSetRecoilState(commonState)
   const theme = createTheme({
     palette: {
       primary: {
@@ -51,14 +52,14 @@ export default function Register() {
       type: 'dark',
     },
   })
-  const [userId, setUserId] = useState<string>('')
+  const [userId, setUserId] = useState<number>(0)
   const [password, setPassword] = useState<string>('')
   const [passwordConfirm, setPasswordConfirm] = useState<string>('')
   const [isClose, setIsClose] = useState<boolean>(false)
 
   const handleChangeUserId = useCallback(
     (event: React.ChangeEvent<HTMLInputElement>) => {
-      setUserId(event.target.value)
+      setUserId(Number(event.target.value))
     },
     [setUserId]
   )
@@ -82,21 +83,31 @@ export default function Register() {
   }, [setIsClose])
 
   const handleSubmit = useCallback(
-    (event: FormEvent) => {
+    async (event: FormEvent) => {
       event.preventDefault()
       event.persist()
-      const submitData = new FormData()
-      submitData.append('user_id', userId)
-      submitData.append('password', password)
-      submitData.append('password_confirm', passwordConfirm)
-      setIsClose(false)
+      const submitData = {
+        userId,
+        password,
+        passwordConfirm,
+      }
+      const result = await postRegister(submitData)
+      if (!result.status) {
+        setIsClose(false)
+        setState((): CommonStateType => {
+          return {
+            isPosting: false,
+            isLoading: false,
+            status: result.status,
+            message: result.message || 'ログインに失敗しました',
+          }
+        })
+        return
+      }
+      setIsClose(true)
     },
-    [userId, password, passwordConfirm, setIsClose]
+    [userId, password, passwordConfirm, setState]
   )
-
-  if (!state.status) {
-    history('/login')
-  }
 
   return (
     <ThemeProvider theme={theme}>
@@ -137,7 +148,6 @@ export default function Register() {
                   name="user_id"
                   autoComplete="user_id"
                   onChange={handleChangeUserId}
-                  value={userId}
                 />
                 <TextField
                   variant="outlined"
@@ -150,7 +160,6 @@ export default function Register() {
                   id="password"
                   autoComplete="current-password"
                   onChange={handleChangePassword}
-                  value={password}
                 />
                 <TextField
                   variant="outlined"
@@ -163,7 +172,6 @@ export default function Register() {
                   id="password"
                   autoComplete="current-password"
                   onChange={handleChangePasswordConfirm}
-                  value={passwordConfirm}
                 />
                 <Button type="submit" variant="contained" color="primary" className={classes.submit}>
                   登録

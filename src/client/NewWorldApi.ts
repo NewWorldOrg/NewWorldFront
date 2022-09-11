@@ -12,7 +12,11 @@ export async function postRegister(request: PostRegisterParameter): Promise<Post
     headers: {
       'content-type': 'multipart/form-data',
     },
-    data: request,
+    data: {
+      user_id: request.userId,
+      password: request.password,
+      password_confirm: request.passwordConfirm,
+    },
   })
   return result.data
 }
