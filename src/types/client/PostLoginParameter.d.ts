@@ -1,4 +1,4 @@
 export default interface PostLoginParameter {
-  userId: number
+  userId: string
   password: string
 }

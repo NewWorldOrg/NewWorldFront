@@ -58,7 +58,7 @@ export default function Login() {
   })
   const state = useRecoilValue(commonState)
   const setState = useSetRecoilState(commonState)
-  const [userId, setUserId] = useState<number>(0)
+  const [userId, setUserId] = useState<string>('')
   const [password, setPassword] = useState<string>('')
   const [isClose, setIsClose] = useState<boolean>(false)
 
@@ -68,7 +68,7 @@ export default function Login() {
 
   const handleChangeUserId = useCallback(
     (event: React.ChangeEvent<HTMLInputElement>) => {
-      setUserId(Number(event.target.value))
+      setUserId(event.target.value)
     },
     [setUserId]
   )
