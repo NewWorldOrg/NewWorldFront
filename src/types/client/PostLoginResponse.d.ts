@@ -9,7 +9,7 @@ export default interface PostLoginResponse {
     access_token: string
     user: {
       id: number
-      userId: number
+      userId: string
       name: string
       iconUrl: string
       status: string
