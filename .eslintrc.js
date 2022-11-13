@@ -24,6 +24,11 @@ module.exports = {
     'react',
     'react-hooks',
   ],
+  settings: {
+    react: {
+      version: 'detect',
+    },
+  },
   // add your custom rules here
   rules: {
     'no-use-before-define': 'off',

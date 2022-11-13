@@ -1,5 +1,5 @@
 export default interface PostRegisterParameter {
-  userId: number
+  userId: string
   password: string
   passwordConfirm: string
 }

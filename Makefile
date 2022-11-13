@@ -1,6 +1,6 @@
 CONTAINER_ID := `docker-compose ps -q new-world-front-app`
 
-docker-build:
+docker_build:
 	@docker-compose build
 up:
 	@mutagen-compose up -d
@@ -16,7 +16,7 @@ prod:
 	@docker-compose exec new-world-front-app yarn prod
 lint:
 	@docker-compose exec new-world-front-app yarn lint
-lint-fix:
+lint_fix:
 	@docker-compose exec new-world-front-app yarn lint:fix
 cp_node_modules:
 	rm -rf ./node_modeules
