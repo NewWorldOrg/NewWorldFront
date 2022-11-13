@@ -1,10 +1,9 @@
 {
-  "name": "new_world_medication_history",
+  "name": "new_world_front",
   "version": "0.1.0",
   "private": true,
   "scripts": {
     "dev": "vite --config vite.config.ts",
-    "watch": "webpack serve --mode=production --config build/webpack.devserver.config.js",
     "build": "vite build --config vite.config.ts",
     "lint": "eslint --ext .ts,.js,.tsx,.jsx src",
     "lint:fix": "eslint --ext .ts,.js,.tsx,.jsx src --fix",

@@ -19,6 +19,7 @@ import { useRecoilValue, useSetRecoilState } from 'recoil'
 import { commonState } from '../store/CommonState'
 import { postRegister } from '../client/NewWorldApi'
 import { CommonStateType } from '../types/store/CommonState'
+import { useNavigate } from 'react-router-dom'
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -42,6 +43,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Register() {
   const classes = useStyles()
+  const navigate = useNavigate()
   const state = useRecoilValue(commonState)
   const setState = useSetRecoilState(commonState)
   const theme = createTheme({
@@ -99,14 +101,15 @@ export default function Register() {
             isPosting: false,
             isLoading: false,
             status: result.status,
-            message: result.message || 'ログインに失敗しました',
+            message: result.message || 'パスワードの登録に失敗しました',
           }
         })
         return
       }
       setIsClose(true)
+      navigate('/')
     },
-    [userId, password, passwordConfirm, setState]
+    [userId, password, passwordConfirm, setState, navigate]
   )
 
   return (
