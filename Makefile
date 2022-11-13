@@ -12,8 +12,6 @@ dev:
 	@docker-compose exec new-world-front-app yarn dev
 build:
 	@docker-compose exec new-world-front-app yarn build
-prod:
-	@docker-compose exec new-world-front-app yarn prod
 lint:
 	@docker-compose exec new-world-front-app yarn lint
 lint_fix:
