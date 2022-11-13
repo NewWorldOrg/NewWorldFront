@@ -52,14 +52,14 @@ export default function Register() {
       type: 'dark',
     },
   })
-  const [userId, setUserId] = useState<number>(0)
+  const [userId, setUserId] = useState<string>('')
   const [password, setPassword] = useState<string>('')
   const [passwordConfirm, setPasswordConfirm] = useState<string>('')
   const [isClose, setIsClose] = useState<boolean>(false)
 
   const handleChangeUserId = useCallback(
     (event: React.ChangeEvent<HTMLInputElement>) => {
-      setUserId(Number(event.target.value))
+      setUserId(event.target.value)
     },
     [setUserId]
   )
