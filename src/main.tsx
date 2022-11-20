@@ -7,6 +7,7 @@ import MyPage from './pages/MyPage'
 import Login from './pages/Login'
 import Register from './pages/Register'
 import { createRoot } from 'react-dom/client'
+import DefinitiveRegister from './pages/DefinitiveRegister'
 
 const container = document.getElementById('root')
 const root = createRoot(container!)
@@ -18,6 +19,7 @@ root.render(
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/my-page" element={<MyPage />} />
+        <Route path="/definitive_register" element={<DefinitiveRegister />} />
       </Routes>
     </BrowserRouter>
   </RecoilRoot>
