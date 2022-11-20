@@ -37,6 +37,7 @@ services:
             `/__vite_ping`,
             `/login`,
             `/register`,
+            '/definitive_register',
             `/my-page`,
             `/@vite/client`,
             `/@fs/code/node_modules/vite/dist/client/`,

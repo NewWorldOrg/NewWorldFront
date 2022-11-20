@@ -4,6 +4,7 @@ import PostLoginResponse from '../types/client/PostLoginResponse'
 import BearerAuthenticationResponse from '../types/client/BearerAuthenticationResponse'
 import PostLoginParameter from '../types/client/PostLoginParameter'
 import PostRegisterParameter from '../types/client/PostRegisterParameter'
+import PostDefinitiveRegisterResponse from '../types/client/PostDefinitiveRegisterResponse'
 
 export async function postRegister(request: PostRegisterParameter): Promise<PostRegisterResponse> {
   const result = await axios({
@@ -44,6 +45,19 @@ export async function bearerAuthentication(accessToken: string): Promise<BearerA
     url: import.meta.env.VITE_API_BASE_URL + '/api/users/',
     headers: {
       Authorization: `Bearer ${accessToken}`,
+    },
+  }).catch((e) => {
+    return e.response
+  })
+  return result.data
+}
+
+export async function definitiveRegister(definitiveRegisterToken: string): Promise<PostDefinitiveRegisterResponse> {
+  const result = await axios({
+    method: 'POST',
+    url: import.meta.env.VITE_API_BASE_URL + `/api/users/definitive_registers`,
+    data: {
+      definitive_register_token: definitiveRegisterToken,
     },
   }).catch((e) => {
     return e.response
