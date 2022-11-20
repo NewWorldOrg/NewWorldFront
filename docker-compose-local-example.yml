@@ -8,6 +8,13 @@ x-mutagen:
       mode: "two-way-resolved"
       ignore:
         vcs: true
+      permissions:
+        defaultFileMode: 0666
+        defaultDirectoryMode: 0777
+      configurationBeta:
+        permissions:
+          defaultOwner: id:0
+          defaultGroup: id:0
 
 services:
   new-world-front-app:

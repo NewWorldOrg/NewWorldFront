@@ -42,8 +42,8 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 export default function Register() {
-  const navigate = useNavigate()
   const classes = useStyles()
+  const navigate = useNavigate()
   const state = useRecoilValue(commonState)
   const setState = useSetRecoilState(commonState)
   const theme = createTheme({
@@ -101,7 +101,7 @@ export default function Register() {
             isPosting: false,
             isLoading: false,
             status: result.status,
-            message: result.message || 'ログインに失敗しました',
+            message: result.message || 'パスワードの登録に失敗しました',
           }
         })
         return
@@ -109,7 +109,7 @@ export default function Register() {
       setIsClose(true)
       navigate('/')
     },
-    [userId, password, passwordConfirm, navigate, setState]
+    [userId, password, passwordConfirm, setState, navigate]
   )
 
   return (
