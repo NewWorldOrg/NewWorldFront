@@ -1,8 +1,6 @@
 import * as path from 'path'
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
-import reactRefresh from '@vitejs/plugin-react-refresh'
-import reactJsx from 'vite-react-jsx'
 import eslintPlugin from 'vite-plugin-eslint'
 
 const HOST = '0.0.0.0'
@@ -22,7 +20,7 @@ export default defineConfig({
     },
     force: true,
   },
-  plugins: [react(), reactJsx(), reactRefresh(), eslintPlugin()],
+  plugins: [react(), eslintPlugin()],
   build: {
     outDir: path.resolve(__dirname, 'dist'),
   },

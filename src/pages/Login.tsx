@@ -157,7 +157,6 @@ export default function Login() {
                   name="user_id"
                   autoComplete="user_id"
                   onChange={handleChangeUserId}
-                  disabled={state.isPosting}
                 />
                 <TextField
                   variant="outlined"
