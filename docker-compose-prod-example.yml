@@ -33,7 +33,7 @@ services:
         )"
   app:
     container_name: new-world-front-app
-    image: node:16.13.0
+    image: node:19
     working_dir: /code
     volumes:
       - .:/code
