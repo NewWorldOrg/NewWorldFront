@@ -8,6 +8,8 @@ import Login from './pages/Login'
 import Register from './pages/Register'
 import { createRoot } from 'react-dom/client'
 import DefinitiveRegister from './pages/DefinitiveRegister'
+// import { AppLayout } from '@cloudscape-design/components'
+import '@cloudscape-design/global-styles/index.css'
 
 const container = document.getElementById('root')
 const root = createRoot(container!)

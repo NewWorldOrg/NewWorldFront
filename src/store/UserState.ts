@@ -11,17 +11,6 @@ export const userState = atom<UserStateType>({
       name: '',
       iconUrl: '',
       status: '',
-      medicationHistories: [
-        {
-          id: 0,
-          amount: '',
-          drug: {
-            id: 0,
-            drugName: '',
-            url: '',
-          },
-        },
-      ],
     },
   },
 })
@@ -51,17 +40,6 @@ export const syncUser = selector({
           name: '',
           iconUrl: '',
           status: '',
-          medicationHistories: [
-            {
-              id: 0,
-              amount: '',
-              drug: {
-                id: 0,
-                drugName: '',
-                url: '',
-              },
-            },
-          ],
         },
       }
     }
