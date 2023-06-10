@@ -14,13 +14,18 @@ export default defineConfig({
     strictPort: true,
     hmr: {
       clientPort: 80,
+      overlay: false,
     },
     watch: {
       ignored: ['./dist', './node_modules'],
     },
-    force: true,
   },
-  plugins: [react(), eslintPlugin()],
+  plugins: [
+    react({
+      jsxRuntime: 'classic',
+    }),
+    eslintPlugin(),
+  ],
   build: {
     outDir: path.resolve(__dirname, 'dist'),
   },

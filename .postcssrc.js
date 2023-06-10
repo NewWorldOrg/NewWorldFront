@@ -5,7 +5,8 @@ module.exports = {
   plugins: {
     'postcss-import': {},
     'postcss-url': {},
-    autoprefixer: {},
+    'postcss-nesting': {},
     cssnano: { preset: 'default', autoprefixer: false }
-  }
+  },
+  autoprefixer: {},
 }

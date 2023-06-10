@@ -5,16 +5,5 @@ export interface UserStateType {
     name: string
     iconUrl: string
     status: string
-    medicationHistories: [
-      {
-        id: number
-        amount: string
-        drug: {
-          id: number
-          drugName: string
-          url: string
-        }
-      }
-    ]
   }
 }
